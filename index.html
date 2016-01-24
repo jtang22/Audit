@@ -11,7 +11,7 @@
 		<script src="//www.parsecdn.com/js/parse-1.2.19.min.js"></script>		
 		<script src="//cdn.rawgit.com/Artod/baascms/master/dist/baascms-1.0.0.min.js"></script>
 		<script src="//cdn.rawgit.com/Artod/baascms/master/dist/baascms-adapter-parse-1.0.0.min.js"></script>
-    		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
     		
     		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -36,9 +36,8 @@
     .controller('ExampleController', ['$scope', function($scope) {
       $scope.userList = [];
 
-    $scope.getUser = function() {
-        var User = Parse.Object.extend("User");
-        var query = new Parse.Query(User);
+    $scope.displayUser = function() {
+        var query = new Parse.Query(Parse.User);
         
         var td1 = document.getElementById('td1');
         
@@ -47,7 +46,7 @@
                 $scope.userList = [];
                 for(var i = 0; i < results.length; i++) {
                     $scope.userList.push({firstname:results[i].get("firstName"), lastname:results[i].get("lastName"), email:results[i].get("email")});
-                    text = document.createTextNode("" + userList[i].firstname + userList[i].lastname + userList[i].email);
+                    text = document.createTextNode("" + userList[i].username + " " + userList[i].firstname + " " + userList[i].lastname + " " + userList[i].email);
                     td1.appendChild(text);
                 }
             }
@@ -56,15 +55,21 @@
         }
         });
         
-    }
+    };
     
+    $scope.test = function() {
+        alert("hello test");
+    }    
+        
     $scope.addUser = function(){
            
-        var User = new Parse.User();
-        var user = new User();
+        var user = new Parse.User();
+        user.set("username", $scope.username);
+        user.set("password", $scope.password);
+        user.set("email", $scope.email);
+
         user.set("firstName", $scope.firstname);
         user.set("lastName", $scope.lastname);
-        user.set("email", $scope.email);
   		user.signUp(null, {
             success: function(user) {
                 alert("User added!");
@@ -74,6 +79,7 @@
             }
         });
       };
+        
     }]);
     
 </script>
@@ -91,6 +97,10 @@
 
 
 <div class="container">
+                    <h3>Username:</h3>
+                    <input class="form-control" type="text" ng-model="username" />
+                    <h3>Password:</h3>
+                    <input class="form-control" type="password" ng-model="password" />
       				<h3>First Name:</h3>
       				<input class="form-control"  type="text"  placeholder="Example: Jordan" ng-model="firstname" name="name2" />
       				<h3>Last Name:</h3>
@@ -100,12 +110,16 @@
 
       				<p></p>
       				<input class="btn btn-primary btn-block" type="submit" id="addUser" value="Submit" ng-click="addUser()" />
+                    <input class = "btn btn-primary" type="submit" id="displayUser" value="Display Users" ng-click="displayUser()" />
+          		    <input class="btn btn-primary btn-block" type="submit" id="Test" value="Test" ng-click="test()" />
+
         <table>
             <tr>
                 <td id="td1"></td>
             </tr>
         </table>
-				</div >	
+				</div>	
+    </div>
 
 </body>
 </html>
