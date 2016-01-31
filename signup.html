@@ -51,15 +51,15 @@
       <div class="container">
           <h1>Sign up!</h1>
           <h3>Username:</h3>
-          <input class="form-control" type="text" ng-model="username" />
+          <input class="form-control" type="text" id="username" ng-model="username" />
           <h3>Password:</h3>
-          <input class="form-control" type="password" ng-model="password" />
+          <input class="form-control" type="password" id="password" ng-model="password" />
           <h3>First Name:</h3>
-          <input class="form-control"  type="text"  placeholder="Example: Jordan" ng-model="firstname" name="name2" />
+          <input class="form-control"  type="text" id="firstname" placeholder="Example: Jordan" ng-model="firstname" name="name2" />
           <h3>Last Name:</h3>
-          <input class="form-control"  type="text"  placeholder="Example: Tang" ng-model="lastname" />
+          <input class="form-control"  type="text" id="lastname" placeholder="Example: Tang" ng-model="lastname" />
           <h3>Email:</h3>
-          <input class="form-control"  type="text"  placeholder="Example: jtang22@calpoly.edu" ng-model="email"/>
+          <input class="form-control"  type="text" id="email" placeholder="Example: jtang22@calpoly.edu" ng-model="email"/>
          <br>
           <input class="btn btn-primary btn-block" type="submit" id="addUser" value="Submit" ng-click="addUser()" />
       </div>
