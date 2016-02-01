@@ -70,8 +70,11 @@
             <div class="form-group">
               <input type="password" placeholder="Password" id="loginPassword" class="form-control">
             </div>
-            <button type="submit" class="btn btn-success" onclick="loginUser()">Sign in</button>
-            <a button type="submit" class="btn btn-success" href="/signup.html">Sign Up</a>
+                
+            <button type="submit" class="btn btn-success" id="signInButton" onclick="loginUser()">Sign in</button>
+            <a button type="submit" class="btn btn-success" id="signUpButton" href="/signup.html">Sign Up</a>
+              <button   type="submit" class="btn btn-success" id="profileButton" onclick="logoutUser()" style="display:none">View Profile</button>
+              <button   type="submit" class="btn btn-success" id="signOutButton" onclick="logoutUser()" style="display:none">Sign Out</button>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
