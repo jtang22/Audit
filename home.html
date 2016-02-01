@@ -8,7 +8,25 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
-
+      
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.string/2.3.3/underscore.string.min.js"></script>
+      <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/path.js/0.8.4/path.min.js"></script>
+      <script src="//www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+      <script src="//cdn.rawgit.com/Artod/baascms/master/dist/baascms-1.0.0.min.js"></script>
+      <script src="//cdn.rawgit.com/Artod/baascms/master/dist/baascms-adapter-parse-1.0.0.min.js"></script>
+    		
+      <script>
+			Parse.initialize('Q3EGMjM10JF4nGb6rX6jglHJLWuCUG8N4XxFAlwS', 'NJjrfocNakjIVVCyXuwY6mTOu6kVTtBlzq2D3DF5');
+			
+			BaasCMS.init({
+				baas: 'Parse'
+			});
+			
+			
+      </script>
+      
     <title>Audit Homepage</title>
 
     <!-- Bootstrap core CSS -->
@@ -21,6 +39,8 @@
 
     <!-- Custom styles for this template -->
     <link href="jumbotron.css" rel="stylesheet">
+      
+    <script src="userLogIn.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -45,12 +65,12 @@
         <div id="navbar" class="navbar-collapse collapse">
           <form class="navbar-form navbar-right">
             <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
+              <input type="text" placeholder="Username" id="loginUsername" class="form-control">
             </div>
             <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
+              <input type="password" placeholder="Password" id="loginPassword" class="form-control">
             </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
+            <button type="submit" class="btn btn-success" onclick="loginUser()">Sign in</button>
               <button type="submit" class="btn btn-success">Sign up</button>
           </form>
         </div><!--/.navbar-collapse -->
