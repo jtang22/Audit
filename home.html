@@ -49,7 +49,7 @@
     <![endif]-->
   </head>
 
-  <body>
+  <body onload="checkUserLoggedIn()">
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -73,6 +73,7 @@
                 
             <button type="submit" class="btn btn-success" id="signInButton" onclick="loginUser()">Sign in</button>
             <a button type="submit" class="btn btn-success" id="signUpButton" href="/signup.html">Sign Up</a>
+              <a button type="submit" class="btn btn-success" id="passwordReset" href="/passReset.html">Forgot Password?</a>
               <a button   type="submit" class="btn btn-success" id="profileButton" href="/userProfile.html" style="display:none">View Profile</a>
               <button   type="submit" class="btn btn-success" id="signOutButton" onclick="logoutUser()" style="display:none">Sign Out</button>
           </form>
@@ -98,7 +99,7 @@
                   <span class="input-group-btn">
                       <a button class="btn btn-default" type="button" href="/newreview.html">Search!</a>
                       
-                    g</span>
+                    </span>
                 </div><!-- /input-group -->
               </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->
