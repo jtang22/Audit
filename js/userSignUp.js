@@ -6,6 +6,8 @@ function addUser() {
     user.set("firstname", document.getElementById("firstname").value);
     user.set("lastname", document.getElementById("lastname").value);
     user.set("email", document.getElementById("email").value);
+    var reviews = ["review1", "review2", "review3"];
+    user.set("reviews", reviews);
     
     user.signUp(null, {
         success: function(user) {
