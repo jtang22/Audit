@@ -29,3 +29,38 @@ function logoutUser() {
     document.getElementById("signOutButton").style.display = 'none';
     document.getElementById("profileButton").style.display = 'none';
 }
+
+function checkEmail(email)
+{
+    var atPosition = email.indexOf("@");
+    var dotPosition = email.lastIndexOf(".");
+
+    if (atPosition < 1 || dotPosition < atPosition + 2 || dotPosition + 2 >= email.length) 
+    {
+        return false;
+    }
+    return true;
+}
+
+function resetPassword()
+{           
+    var email = document.forms["resetpassword"]["email"].value;
+    var emailIsValid = checkEmail(email);
+
+    if (!emailIsValid)
+    {
+        window.alert("Not a valid e-mail address");
+        return false;
+    }
+
+    Parse.User.requestPasswordReset(email, {
+                success:function() {
+                    window.alert("Password reset link has been sent to "+ email + ".");
+                    return true;
+                },
+                error:function(error) {
+                    window.alert("Could not send reset link to " + email + ". Please try again.");
+                    return false;
+                }
+    });
+}
