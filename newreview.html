@@ -41,6 +41,8 @@
     <!-- Custom styles for this template -->
     <link href="css/jumbotron.css" rel="stylesheet">
 
+    <script src="js/review.js"></script>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -48,7 +50,6 @@
     <![endif]-->
       
     <script src=js/userSignUp.js></script>
-      <script src=js/star-rating.js></script>
       
       <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
   </head>
@@ -78,59 +79,52 @@
           <h5><font color="red">If not applicable, leave blank.</font></h5>
           <br>
           <h3>Customer Service:</h3>
-          <div class="rating">
-              <form action="">
-                <input class="star star-5" id="star-5" type="radio" name="star"/>
-                <label class="star star-5" for="star-5"></label>
-                <input class="star star-4" id="star-4" type="radio" name="star"/>
-                <label class="star star-4" for="star-4"></label>
-                <input class="star star-3" id="star-3" type="radio" name="star"/>
-                <label class="star star-3" for="star-3"></label>
-                <input class="star star-2" id="star-2" type="radio" name="star"/>
-                <label class="star star-2" for="star-2"></label>
-                <input class="star star-1" id="star-1" type="radio" name="star"/>
-                <label class="star star-1" for="star-1"></label>
-            </form>
-          </div>
+            <div class="rate">
+              <input type="radio" id="serviceStar5" name="serviceRate" value="5" />
+              <label for="serviceStar5" title="text">5 stars</label>
+              <input type="radio" id="serviceStar4" name="serviceRate" value="4" />
+              <label for="serviceStar4" title="text">4 stars</label>
+              <input type="radio" id="serviceStar3" name="serviceRate" value="3" />
+              <label for="serviceStar3" title="text">3 stars</label>
+              <input type="radio" id="serviceStar2" name="serviceRate" value="2" />
+              <label for="serviceStar2" title="text">2 stars</label>
+              <input type="radio" id="serviceStar1" name="serviceRate" value="1" />
+              <label for="serviceStar1" title="text">1 star</label>
+            </div>
           <br>
           <br>
           <br>
 
           <h3>Shipping:</h3>
-          <div class="rating">
-              <form action="">
-                <input class="star star-5" id="star-5" type="radio" name="star"/>
-                <label class="star star-5" for="star-5"></label>
-                <input class="star star-4" id="star-4" type="radio" name="star"/>
-                <label class="star star-4" for="star-4"></label>
-                <input class="star star-3" id="star-3" type="radio" name="star"/>
-                <label class="star star-3" for="star-3"></label>
-                <input class="star star-2" id="star-2" type="radio" name="star"/>
-                <label class="star star-2" for="star-2"></label>
-                <input class="star star-1" id="star-1" type="radio" name="star"/>
-                <label class="star star-1" for="star-1"></label>
-            </form>
-          </div>
+            <div class="rate">
+              <input type="radio" id="shippingStar5" name="shippingRate" value="5" />
+              <label for="shippingStar5" title="text">5 stars</label>
+              <input type="radio" id="shippingStar4" name="shippingRate" value="4" />
+              <label for="shippingStar4" title="text">4 stars</label>
+              <input type="radio" id="shippingStar3" name="shippingRate" value="3" />
+              <label for="shippingStar3" title="text">3 stars</label>
+              <input type="radio" id="shippingStar2" name="shippingRate" value="2" />
+              <label for="shippingStar2" title="text">2 stars</label>
+              <input type="radio" id="shippingStar1" name="shippingRate" value="1" />
+              <label for="shippingStar1" title="text">1 star</label>
+            </div>
           <br>
           <br>
           <br>
-          
-          
+                  
           <h3>Quality:</h3>
-          <div class="rating">
-              <form action="">
-                <input class="star star-5" id="star-5" type="radio" name="star"/>
-                <label class="star star-5" for="star-5"></label>
-                <input class="star star-4" id="star-4" type="radio" name="star"/>
-                <label class="star star-4" for="star-4"></label>
-                <input class="star star-3" id="star-3" type="radio" name="star"/>
-                <label class="star star-3" for="star-3"></label>
-                <input class="star star-2" id="star-2" type="radio" name="star"/>
-                <label class="star star-2" for="star-2"></label>
-                <input class="star star-1" id="star-1" type="radio" name="star"/>
-                <label class="star star-1" for="star-1"></label>
-            </form>
-          </div>
+            <div class="rate">
+              <input type="radio" id="qualityStar5" name="qualityRate" value="5" />
+              <label for="qualityStar5" title="text">5 stars</label>
+              <input type="radio" id="qualityStar4" name="qualityRate" value="4" />
+              <label for="qualityStar4" title="text">4 stars</label>
+              <input type="radio" id="qualityStar3" name="qualityRate" value="3" />
+              <label for="qualityStar3" title="text">3 stars</label>
+              <input type="radio" id="qualityStar2" name="qualityRate" value="2" />
+              <label for="qualityStar2" title="text">2 stars</label>
+              <input type="radio" id="qualityStar1" name="qualityRate" value="1" />
+              <label for="qualityStar1" title="text">1 star</label>
+            </div>
           <br>
           <br>
           <br>
@@ -140,8 +134,7 @@
               <label for="comment"><h3>Comment:</h3></label>
               <textarea class="form-control" rows="5" id="comment"></textarea>
           </div>
-          
-          <input class="btn btn-primary btn-block" type="submit" id="addReview" value="Submit" onclick="" />
+          <input class="btn btn-primary btn-block" type="submit" id="addReview" value="Submit" onclick="getReview()" />
       </div>
     </div>
 
