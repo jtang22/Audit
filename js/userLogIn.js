@@ -94,21 +94,28 @@ function validateForm() {
 }
 
 function loadUserData() {
+    checkUserLoggedIn();
+    document.getElementById("profileButton").style.display = 'none';
+
     var user = Parse.User.current();
     var name;
     var numReviews;
     var reviews;
     var para;
     var node;
-    var element = document.getElementById("userInfoDiv");
+    var elementName = document.getElementById("userName");
     name = user.get("firstname") + " " + user.get("lastname");
     reviews = user.get("reviews");
     numReviews = reviews.length;
-
-    para = document.createElement("p");
+    
+    // member name label
+    para = document.createElement("label");
     node = document.createTextNode(name);
     para.appendChild(node);
-    element.appendChild(para);
+    elementName.appendChild(para);
+    
+    // number of reviews
+    var elementNumReview = document.getElementById("numReviews");
     
     para = document.createElement("p");
     if(reviews.length == 1) {
@@ -118,11 +125,17 @@ function loadUserData() {
         node = document.createTextNode(numReviews + " Reviews");
     }
     para.appendChild(node);
-    element.appendChild(para);
+    elementNumReview.appendChild(para);
+    
+    //displays all reviews
+    
+    var elementReviews = document.getElementId("displayReview");
+    //var elementReviewDescr = document.getElementId("reviewDescription");
     for (var i = 0; i < numReviews; i++) {
-        para = document.createElement("p");
+        para = document.createElement("label");
         node = document.createTextNode(reviews[i]);
         para.appendChild(node);
-        element.appendChild(para);
+        elementReviews.appendChild(para);
     }
+    
 }
