@@ -1,10 +1,10 @@
 function getReview() {
-	var serviceRating = getRating("serviceRate");
-	var shippingRating = getRating("shippingRate");
-	var qualityRating = getRating("qualityRate");
-	var comment = getElementById("comment").value;
+	var serviceRating = parseInt(getRating("serviceRate"));
+	var shippingRating = parseInt(getRating("shippingRate"));
+	var qualityRating = parseInt(getRating("qualityRate"));
+	var comment = document.getElementById("comment").value;
 
-	var Review = new Parse.Object.extend("Review");
+	var Review = Parse.Object.extend("Review");
 	var review = new Review();
 
 	review.set("companyId", "placeholderCompany");
@@ -25,7 +25,7 @@ function getReview() {
 	    	// error is a Parse.Error with an error code and message.
 	    	alert('Failed to create new object, with error code: ' + error.message);
 	  	}
-	}
+	});
 }
 
 function getRating(rateName) {
