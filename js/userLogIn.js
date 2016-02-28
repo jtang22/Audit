@@ -139,3 +139,54 @@ function loadUserData() {
     }
     
 }
+
+function loadCompanyData() {
+    checkUserLoggedIn();
+    var name;
+    var image;
+    var url;
+    
+    var Company = Parse.Object.extend("Company");
+    var query = new Parse.Query(Company);
+    
+    query.get("fbe2ipKebQ", {
+        success: function(company) {
+            //when successful
+            var reviews;
+            var para;
+            var node;
+            name = company.get("Name");
+            image = company.get("Image");
+            url = company.get("Url");
+
+
+            var companyName = document.getElementById("companyName");
+            // company name label
+            para = document.createElement("label");
+            node = document.createTextNode(name);
+            para.appendChild(node);
+            companyName.appendChild(para);
+
+            var companyWeb = document.getElementById("companyWebsite");
+            para = document.createElement("p");
+            node = document.createTextNode(url);
+            para.appendChild(node)
+            companyWeb.appendChild(para);
+            
+            //insert reviews
+            var elementReviews = document.getElementId("displayReview");
+            //var elementReviewDescr = document.getElementId("reviewDescription");
+            for (var i = 0; i < numReviews; i++) {
+                para = document.createElement("label");
+                node = document.createTextNode(reviews[i]);
+                para.appendChild(node);
+                elementReviews.appendChild(para);
+    }
+          
+        },
+        
+        error: function(object, error) {
+            //error checking stuff
+        }
+    });
+}
