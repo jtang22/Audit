@@ -239,3 +239,36 @@ function loadCompanyData() {
         }
     });
 }
+
+function setPicture() {
+    var picture = document.getElementById("picture").value;
+    var user = Parse.User.current();
+    user.set("picture", picture);
+
+    user.save(null, {
+        success: function() {
+            alert("File successfully uploaded.");
+        },
+        error: function() {
+            alert("Failed to upload file.");
+        }
+    });
+
+    /*user = Parse.User.current();
+    user.fetch({
+        success: function(objUser) {              
+            objUser.set("picture", picture);
+            objUser.save(null, {
+                success: function() {
+                    alert("File successfully uploaded.");
+                },
+                error: function() {
+                    alert("Failed to upload file.");
+                }
+            });
+        },
+        error: function(objUser, error) {
+            alert("Could not fetch user.");
+        }
+    });*/
+}
