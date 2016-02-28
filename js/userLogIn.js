@@ -179,14 +179,6 @@ function loadUserData() {
        } 
     });
     
-    /*for (var i = 0; i < numReviews; i++) {
-        shipPara = document.createElement("label");
-        shipNode = document.createTextNode("Shipping:" + reviews[i].get("shippingRating"));
-        shipPara.appendChild(shipNode);
-        elementReviews.appendChild(shipPara);
-        
-    }*/
-    
 }
 
 function loadCompanyData() {
@@ -194,20 +186,23 @@ function loadCompanyData() {
     var name;
     var image;
     var url;
+    var companyId;
     
     var Company = Parse.Object.extend("Company");
     var query = new Parse.Query(Company);
-    
-    query.get("fbe2ipKebQ", {
-        success: function(company) {
+    query.equalTo("Searched", true);
+    query.find({
+        success: function(results) {
             //when successful
             var reviews;
             var para;
             var node;
-            name = company.get("Name");
-            image = company.get("Image");
-            url = company.get("Url");
-
+            name = results[0].get("Name");
+            image = results[0].get("Image");
+            url = results[0].get("Url");
+            companyId = results[0].get("objectId");
+            results[0].set("Searched", false);
+            results[0].save();
 
             var companyName = document.getElementById("companyName");
             // company name label
@@ -232,7 +227,7 @@ function loadCompanyData() {
     //var elementReviewDescr = document.getElementId("reviewDescription");
     var Review = Parse.Object.extend("Review");
     var query = new Parse.Query(Review);
-    query.equalTo("companyId", "fbe2ipKebQ");
+    query.equalTo("companyId", companyId);
     query.find({
        success: function(userReviews) {
 

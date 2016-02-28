@@ -12,15 +12,25 @@ $(function(){
         }
     },
     error: function(error) {
-        alert("Error: " + error.code + " " + error.message);
+        alert("Error fetching companies: " + error.code + " " + error.message);
     }
   }).then(function() {
     companies = companyList.slice(0);
     $('#autocomplete').autocomplete({
         lookup: companies,
         onSelect: function (suggestion) {
-            var thehtml = '<strong>Company Name:</strong> ' + suggestion.companyName;
-            $('#outputcontent').html(thehtml);
+            query = new Parse.Query(Company);
+            query.equalTo("Name", suggestion.value);
+            query.find({
+                success: function(results) {
+                    results[0].set("Searched", true);
+                    results[0].save();
+                    window.location.href = "companyProfile.html";
+                },
+                error: function(error) {
+                    alert("Error with search results: " + error.code + " " + error.message);
+                }
+            })
         }
     });
   });

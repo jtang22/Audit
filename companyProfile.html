@@ -69,15 +69,15 @@
         <div id="navbar" class="navbar-collapse collapse">
           <form class="navbar-form navbar-right">
             <div class="form-group">
-              <input type="text" placeholder="Username" id="loginUsername" class="form-control">
+              <input type="text" placeholder="Username" id="loginUsername" class="form-control" style="display:none">
             </div>
             <div class="form-group">
-              <input type="password" placeholder="Password" id="loginPassword" class="form-control">
+              <input type="password" placeholder="Password" id="loginPassword" class="form-control" style="display:none">
             </div>
                 
-            <button type="submit" class="btn btn-success" id="signInButton" onclick="loginUser()">Sign in</button>
-            <a button type="submit" class="btn btn-success" id="signUpButton" href="/signup.html">Sign Up</a>
-              <a button type="submit" class="btn btn-success" id="passwordReset" href="/passReset.html">Forgot Password?</a>
+            <button type="submit" class="btn btn-success" id="signInButton" onclick="loginUser()" style="display:none">Sign in</button>
+            <a button type="submit" class="btn btn-success" id="signUpButton" href="/signup.html" style="display:none">Sign Up</a>
+              <a button type="submit" class="btn btn-success" id="passwordReset" href="/passReset.html" style="display:none">Forgot Password?</a>
               <a button   type="submit" class="btn btn-success" id="profileButton" href="/userProfile.html" style="display:none">View Profile</a>
               <button   type="submit" class="btn btn-success" id="signOutButton" onclick="logoutUser()" style="display:none">Sign Out</button>
           </form>
