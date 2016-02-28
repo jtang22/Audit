@@ -50,11 +50,12 @@
     <![endif]-->
       
     <script src=js/userSignUp.js></script>
+      <script src=js/userLogIn.js></script>
       
       <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
   </head>
 
-  <body>
+  <body onload="checkUserLoggedIn()">
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -67,6 +68,21 @@
           </button>
           <a class="navbar-brand" href="/home.html">audit.</a>
         </div>
+                <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" placeholder="Username" id="loginUsername" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" id="loginPassword" class="form-control">
+            </div>
+                
+            <button type="submit" class="btn btn-success" id="signInButton" onclick="loginUser()">Sign in</button>
+            <a button type="submit" class="btn btn-success" id="signUpButton" href="/signup.html">Sign Up</a>
+              <a button type="submit" class="btn btn-success" id="passwordReset" href="/passReset.html">Forgot Password?</a>
+              <a button   type="submit" class="btn btn-success" id="profileButton" href="/userProfile.html" style="display:none">View Profile</a>
+              <button   type="submit" class="btn btn-success" id="signOutButton" onclick="logoutUser()" style="display:none">Sign Out</button>
+          </form>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
@@ -77,6 +93,8 @@
           <center><h1>Write A Review!</h1></center>
           <br>
           <h5><font color="red">If not applicable, leave blank.</font></h5>
+          <br>
+          <h3 id="companyName">Test Company</h3>
           <br>
           <h3>Customer Service:</h3>
             <div class="rate">

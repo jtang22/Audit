@@ -6,12 +6,12 @@ function addUser() {
     user.set("firstname", document.getElementById("firstname").value);
     user.set("lastname", document.getElementById("lastname").value);
     user.set("email", document.getElementById("email").value);
-    var reviews = ["review1", "review2", "review3"];
-    user.set("reviews", reviews);
+    user.set("numReviews", 0);
     
     user.signUp(null, {
         success: function(user) {
             alert("User added!");
+            window.location.href = "home.html"
         },
         error: function(user, error){
             alert("Error: " + error.code + " " + error.message);
