@@ -199,7 +199,7 @@ function loadCompanyData() {
             name = results[0].get("Name");
             var image = results[0].get("Image");
             var url = results[0].get("Url");
-            var service = results[0].get("Serivce");
+            var service = results[0].get("Service");
             var shipping = results[0].get("Shipping");
             var quality = results[0].get("Quality");
             results[0].set("Searched", false);
@@ -219,25 +219,25 @@ function loadCompanyData() {
             companyWeb.appendChild(para);
             
             //company customer service rating
-            var companyService = document.getElementById("CompanyService");
+            var companyService = document.getElementById("companyService");
             para = document.createElement("p");
-            node = document.createTextNode(service);
+            node = document.createTextNode("Customer Service: " + service);
             para.appendChild(node)
-            companyWeb.appendChild(para);
+            companyService.appendChild(para);
             
             //company shipping rating
             var companyShipping = document.getElementById("companyShipping");
             para = document.createElement("p");
-            node = document.createTextNode(shipping);
+            node = document.createTextNode("Shipping: " + shipping);
             para.appendChild(node)
-            companyWeb.appendChild(para);
+            companyShipping.appendChild(para);
             
             //company quality rating
             var companyQuality = document.getElementById("companyQuality");
             para = document.createElement("p");
-            node = document.createTextNode(quality);
+            node = document.createTextNode("Quality: " + quality);
             para.appendChild(node)
-            companyWeb.appendChild(para);
+            companyQuality.appendChild(para);
             
         },
         error: function(object, error) {
