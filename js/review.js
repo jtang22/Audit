@@ -3,11 +3,12 @@ function getReview() {
 	var shippingRating = parseInt(getRating("shippingRate"));
 	var qualityRating = parseInt(getRating("qualityRate"));
 	var comment = document.getElementById("comment").value;
-    var companyTitle = document.getElementById("companyName").innerHTML;
+    var companyTitle = document.getElementById("companyName").textContent;
 
 	var Review = Parse.Object.extend("Review");
 	var review = new Review();
-    
+    var Company = Parse.Object.extend("Company");
+    var query = new Parse.Query(Company);
     var user = Parse.User.current();
     user.set("numReviews", user.get("numReviews") + 1);
     user.save();
@@ -19,18 +20,6 @@ function getReview() {
 	review.set("shippingRating", shippingRating);
 	review.set("qualityRating", qualityRating);
 	review.set("comment", comment);
-
-    /*var reviews = user.get("reviews");
-    reviews.push(review);
-    user.set("reviews", reviews);
-    user.save(null, {
-        success: function() {
-            alert("successfully added review to " + user.get("firstname") + " " + user.get("lastname") + "'s profile");
-        },
-        error: function(error) {
-            alert("failed to add review, with error code: " + error.message);
-        }
-    });*/
     
 	review.save(null, {
 		success: function(review) {
@@ -42,7 +31,19 @@ function getReview() {
 	    	// error is a Parse.Error with an error code and message.
 	    	alert('Failed to create new object, with error code: ' + error.message);
 	  	}
-	});
+	}).then(function() {
+        query.equalTo("Name", companyTitle);
+        query.find({
+            success: function(results) {
+                results[0].set("Searched", true);
+                results[0].save();
+                window.location.href = "companyProfile.html";
+            },
+            error: function(object, error) {
+                alert("error with posting a review " + error.code);
+            }
+        })
+    })
 }
 
 function getRating(rateName) {
@@ -56,4 +57,40 @@ function getRating(rateName) {
 	}
 
 	return rateValue;
+}
+
+function writeReview() {
+    var name = document.getElementById("companyName").textContent;
+    
+    var Company = Parse.Object.extend("Company");
+    var query = new Parse.Query(Company);
+    
+    query.equalTo("Name", name);
+    query.find({
+        success: function(results) {
+            results[0].set("Searched", true);
+            results[0].save();
+        },
+        error: function(object, error) {
+            alert("Error with write review " + error.code + " " + error.message);
+        }
+    }).then(function() {
+        window.location.href = "newreview.html";
+    });
+}
+
+function checkCompanyReview() {
+    var Company = Parse.Object.extend("Company");
+    var query = new Parse.Query(Company);
+    query.equalTo("Searched", true);
+    query.find({
+       success: function(results) {
+           document.getElementById("companyName").innerHTML = results[0].get("Name");
+           results[0].set("Searched", false);
+           results[0].save();
+       },
+       error: function(object, error) {
+           alert("Error with checking which company reviewing for " + error.code);
+       }
+    });
 }
