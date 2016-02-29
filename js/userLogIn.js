@@ -184,8 +184,8 @@ function loadUserData() {
 function loadCompanyData() {
     checkUserLoggedIn();
     var name;
-    var image;
-    var url;
+//    var image;
+//    var url;
     
     var Company = Parse.Object.extend("Company");
     var query = new Parse.Query(Company);
@@ -197,8 +197,11 @@ function loadCompanyData() {
             var para;
             var node;
             name = results[0].get("Name");
-            image = results[0].get("Image");
-            url = results[0].get("Url");
+            var image = results[0].get("Image");
+            var url = results[0].get("Url");
+            var service = results[0].get("Serivce");
+            var shipping = results[0].get("Shipping");
+            var quality = results[0].get("Quality");
             results[0].set("Searched", false);
             results[0].save();
 
@@ -214,6 +217,28 @@ function loadCompanyData() {
             node = document.createTextNode(url);
             para.appendChild(node)
             companyWeb.appendChild(para);
+            
+            //company customer service rating
+            var companyService = document.getElementById("CompanyService");
+            para = document.createElement("p");
+            node = document.createTextNode(service);
+            para.appendChild(node)
+            companyWeb.appendChild(para);
+            
+            //company shipping rating
+            var companyShipping = document.getElementById("companyShipping");
+            para = document.createElement("p");
+            node = document.createTextNode(shipping);
+            para.appendChild(node)
+            companyWeb.appendChild(para);
+            
+            //company quality rating
+            var companyQuality = document.getElementById("companyQuality");
+            para = document.createElement("p");
+            node = document.createTextNode(quality);
+            para.appendChild(node)
+            companyWeb.appendChild(para);
+            
         },
         error: function(object, error) {
             //error checking stuff
@@ -231,7 +256,7 @@ function loadCompanyData() {
                for(var i = 0; i < userReviews.length; i++) {
                     var reviewDiv = document.createElement("div");
                     reviewDiv.className = 'row';
-
+                   
                     var companyPara = document.createElement("h2");
                     var companyNode = document.createTextNode(userReviews[i].get("userId"));
                     companyPara.appendChild(companyNode);
