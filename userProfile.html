@@ -92,16 +92,21 @@
           <div class="media">
               <div class="media-left media-middle">
                 <a href="#">
-                  <img class="media-object" src="https://u.o0bc.com/avatars/no-user-image.gif" style="width:200px;height:200px;">
+                  <img class="media-object" id="profilepic" src="https://u.o0bc.com/avatars/no-user-image.gif" style="width:200px;height:200px;">
                 </a>
               </div>
               <div class="media-body">
                 <h2 class="media-heading" id="userName"></h2>
                 <p id="numReviews"></p>
 <!--            button for image-->
-                <form action="">
+                <!--form action="" name=uploadpic>
                   <input type="file" id="picture" name="pic" accept="image/*">
-                  <input type="submit" onclick="setPicture()">
+                  <input type="submit" onsubmit="" ="setPicture()"-->
+                 <form method="post" action="filesave.cfm" enctype="multipart/form-data" name="form1">
+					<input type="file" id="pic" name="filesent" accept="image/*">
+					<input type="button" value="Upload" name="Upload" onClick="setPicture()">
+					<input type="hidden" name="height" value="0">
+					<input type="hidden" name="width" value="0">
                 </form>
               </div>
             </div>
