@@ -170,9 +170,14 @@ function loadUserData() {
                commentPara.appendChild(commentNode);
                //elementReviews.appendChild(commentPara);
                reviewDiv.appendChild(commentPara);
+               
+               var foundHelpfulPara = document.createElement("p");
+               var foundHelpfulNode = document.createTextNode(userReviews[i].get("score") + " user\(s\) found this review helpful");
+               foundHelpfulPara.appendChild(foundHelpfulNode);
+               reviewDiv.appendChild(foundHelpfulPara);
+               
                var lineBreak = document.createElement("hr");
                reviewDiv.appendChild(lineBreak);
-               
                elementReviews.appendChild(reviewDiv);
 
            }
@@ -322,7 +327,7 @@ function loadCompanyData() {
                        commentPara.appendChild(commentNode);
                         
                        var foundHelpfulPara = document.createElement("p");
-                       var foundHelpfulNode = document.createTextNode(userReviews[i].get("score") + " user\(s\) found this review helpful")
+                       var foundHelpfulNode = document.createTextNode(userReviews[i].get("score") + " user\(s\) found this review helpful");
                        foundHelpfulPara.appendChild(foundHelpfulNode);
                        //elementReviews.appendChild(commentPara);
                        reviewDiv.appendChild(commentPara);
