@@ -371,19 +371,17 @@ function loadCompanyData() {
 }
 
 function setPicture() {
-    var picture = document.getElementById("picture").value;
+    var picture = document.form1.filesent.files;
     var user = Parse.User.current();
-    user.set("picture", picture);
+    var name = user.get("firstname") + " " + user.get("lastname");
+    var parseImage = new Parse.File(name, picture[0]);
+    user.set("picture", parseImage);
+    user.save();
 
-    user.save(null, {
-        success: function() {
-            alert("File successfully uploaded.");
-        },
-        error: function() {
-            alert("Failed to upload file.");
-        }
-    });
-
+    var profilePhoto = user.get("picture");
+    //document.getElementById("profilepic").src = profilePhoto.url();
+    alert(parseImage.url());
+}
     /*user = Parse.User.current();
     user.fetch({
         success: function(objUser) {              
