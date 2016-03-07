@@ -3,19 +3,26 @@ function getReview() {
 	var shippingRating = parseInt(getRating("shippingRate"));
 	var qualityRating = parseInt(getRating("qualityRate"));
 	var comment = document.getElementById("comment").value;
-    var companyTitle = document.getElementById("companyName").textContent;
+    var companyTitle = getCookie("companySearch");
 
 	var Review = Parse.Object.extend("Review");
 	var review = new Review();
     var Company = Parse.Object.extend("Company");
     var query = new Parse.Query(Company);
     var user = Parse.User.current();
-    user.set("numReviews", user.get("numReviews") + 1);
-    user.save();
+    if(user) {
+        user.set("numReviews", user.get("numReviews") + 1);
+        user.save();
+    }
 
 	review.set("companyId", companyTitle);
 	//review.set("userId", Parse.User.current().id);
-	review.set("userId", Parse.User.current().get("username"));
+    if(user) {
+	   review.set("userId", Parse.User.current().get("username"));
+    }
+    else {
+        reivew.set("userId", "anonymous");
+    }
 	review.set("serviceRating", serviceRating);
 	review.set("shippingRating", shippingRating);
 	review.set("qualityRating", qualityRating);
@@ -43,8 +50,33 @@ function getReview() {
             error: function(object, error) {
                 alert("error with posting a review " + error.code);
             }
-        })
-    })
+        });
+    });
+}
+
+function getNewCompanyReview() {
+    var companyName = document.getElementById("companyName").value;
+    /*var query = new Parse.Query(Company);
+    query.equalTo(companyName);
+    query.find({
+        success: function(results) {
+            if(results.length > 0) {
+                alert("This company exists in our database");
+                return;
+            }
+        },
+        error: function(objects, error) {
+            alert("error verifying company exists" + error.code);
+        }
+    });*/
+    var companyWeb = document.getElementById("companyWebsite").value;
+    var Company = Parse.Object.extend("Company");
+    var company = new Company();
+    company.set("Name", companyName);
+    company.set("Url", companyWeb);
+    company.save();
+    document.cookie = "companySearch=" + companyName;
+    getReview();
 }
 
 function getRating(rateName) {
@@ -86,12 +118,25 @@ function checkCompanyReview() {
     query.equalTo("Searched", true);
     query.find({
        success: function(results) {
-           document.getElementById("companyName").innerHTML = results[0].get("Name");
-           results[0].set("Searched", false);
-           results[0].save();
+           if(results.length > 0) {
+               document.getElementById("companyName").innerHTML = results[0].get("Name");
+               results[0].set("Searched", false);
+               results[0].save();
+           }
        },
        error: function(object, error) {
            alert("Error with checking which company reviewing for " + error.code);
        }
     });
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
 }
