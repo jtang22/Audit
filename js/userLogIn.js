@@ -346,7 +346,34 @@ function loadCompanyData() {
                shipping /= userReviews.length;
                quality /= userReviews.length;
                
+               var totalRating = (service + shipping + quality) / 3;
+               var ratingButton;
+               for(var i = 0; i < Math.floor(totalRating); i++) {
+                   switch(i) {
+                       case 0:
+                            ratingButton = document.getElementById("rating1");
+                           break;
+                       case 1:
+                           ratingButton = document.getElementById("rating2");
+                           break;
+                       case 2:
+                           ratingButton = document.getElementById("rating3");
+                           break;
+                       case 3:
+                           ratingButton = document.getElementById("rating4");
+                           break;
+                       case 4:
+                           ratingButton = document.getElementById("rating5");
+                           break;
                            
+                   }
+                   ratingButton.checked = true;
+                   ratingButton.click(function(e) {
+                       e.preventDefault();
+                   });
+               }
+               
+                
                 //company customer service rating
                 var companyService = document.getElementById("companyService");
                 para = document.createElement("p");
