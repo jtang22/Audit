@@ -20,7 +20,8 @@ function getReview() {
 	review.set("shippingRating", shippingRating);
 	review.set("qualityRating", qualityRating);
 	review.set("comment", comment);
-    
+    review.set("flagged", false);
+    review.set("score", 0);
 	review.save(null, {
 		success: function(review) {
 	    	// Execute any logic that should take place after the object is saved.

@@ -189,7 +189,8 @@ function loadCompanyData() {
     
     var Company = Parse.Object.extend("Company");
     var query = new Parse.Query(Company);
-    query.equalTo("Searched", true);
+    //query.equalTo("Searched", true);
+    query.equalTo("Name", getCookie("companySearch"))
     query.find({
         success: function(results) {
             //when successful
@@ -199,9 +200,9 @@ function loadCompanyData() {
             name = results[0].get("Name");
             var image = results[0].get("Image");
             var url = results[0].get("Url");
-            var service = results[0].get("Service");
+            /*var service = results[0].get("Service");
             var shipping = results[0].get("Shipping");
-            var quality = results[0].get("Quality");
+            var quality = results[0].get("Quality");*/
             results[0].set("Searched", false);
             results[0].save();
 
@@ -218,27 +219,6 @@ function loadCompanyData() {
             para.appendChild(node)
             companyWeb.appendChild(para);
             
-            //company customer service rating
-            var companyService = document.getElementById("companyService");
-            para = document.createElement("p");
-            node = document.createTextNode("Customer Service: " + service);
-            para.appendChild(node)
-            companyService.appendChild(para);
-            
-            //company shipping rating
-            var companyShipping = document.getElementById("companyShipping");
-            para = document.createElement("p");
-            node = document.createTextNode("Shipping: " + shipping);
-            para.appendChild(node)
-            companyShipping.appendChild(para);
-            
-            //company quality rating
-            var companyQuality = document.getElementById("companyQuality");
-            para = document.createElement("p");
-            node = document.createTextNode("Quality: " + quality);
-            para.appendChild(node)
-            companyQuality.appendChild(para);
-            
         },
         error: function(object, error) {
             //error checking stuff
@@ -250,47 +230,140 @@ function loadCompanyData() {
         //var elementReviewDescr = document.getElementId("reviewDescription");
         var Review = Parse.Object.extend("Review");
         var query = new Parse.Query(Review);
+        var flagButton;
+        var helpfulText = "Was this review helpful?";
+        var helpfulButton;
+        var notHelpfulButton;
+        var userReviewExists = false;
+        var user = Parse.User.current();
+        var shipping = 0;
+        var quality = 0;
+        var service = 0;
         query.equalTo("companyId", name);
         query.find({
            success: function(userReviews) {
                for(var i = 0; i < userReviews.length; i++) {
+                    if(user) {
+                        if(user.get("username").localeCompare(userReviews[i].get("userId"))) {
+                            userReviewExists = true;
+                        }
+                    }
                     var reviewDiv = document.createElement("div");
-                    reviewDiv.className = 'row';
-                   
-                    var companyPara = document.createElement("h2");
-                    var companyNode = document.createTextNode(userReviews[i].get("userId"));
-                    companyPara.appendChild(companyNode);
-                    reviewDiv.appendChild(companyPara);
-                    //elementReviews.appendChild(companyDiv);
+                    
+                    flagButton = document.createElement("button");
+                    //flagButton.setAttribute("id", userReviews[i].get("userId"));
+                    flagButton.innerHTML = "Flag";
+                    flagButton.onclick = (function() {
+                        var thisNdx = i;
+                        return function() {
+                            var thisReview = userReviews[thisNdx];
+                            thisReview.set("flagged", true);
+                            thisReview.save();
+                        }
+                    })();
+                    helpfulButton = document.createElement("button");
+                    helpfulButton.innerHTML = "Helpful";
+                    helpfulButton.onclick = (function() {
+                        var thisNdx = i;
+                        return function() {
+                            var thisReview = userReviews[thisNdx];
+                            var curScore = thisReview.get("score");
+                            curScore++;
+                            thisReview.set("score", curScore);
+                            thisReview.save();
+                        }
+                    })();
+                    notHelpfulButton = document.createElement("button");
+                    notHelpfulButton.innerHTML = "Not Helpful";
+                    notHelpfulButton.onclick = (function() {
+                        var thisNdx = i;
+                        return function() {
+                            var thisReview = userReviews[thisNdx];
+                            var curScore = thisReview.get("score");
+                            if(curScore > 0) {
+                                curScore--;
+                                thisReview.set("score", curScore);
+                                thisReview.save();
+                            }
+                        }
+                    })();
+                    service += userReviews[i].get("serviceRating");
+                    shipping += userReviews[i].get("shippingRating");
+                    quality += userReviews[i].get("qualityRating");
+                    if(userReviews[i].get("flagged") != true) {
+                        reviewDiv.className = 'row';
 
-                    var shipPara = document.createElement("h4");
-                    var shipNode = document.createTextNode("Shipping:" + userReviews[i].get("shippingRating"));
-                    shipPara.appendChild(shipNode);
-                    //elementReviews.appendChild(shipPara);
-                    reviewDiv.appendChild(shipPara);
+                        var companyPara = document.createElement("h2");
+                        var companyNode = document.createTextNode(userReviews[i].get("userId"));
+                        companyPara.appendChild(companyNode);
+                        reviewDiv.appendChild(companyPara);
+                        //elementReviews.appendChild(companyDiv);
 
-                    var servPara = document.createElement("h4");
-                    var servNode = document.createTextNode("Service:" + userReviews[i].get("serviceRating"));
-                    servPara.appendChild(servNode);
-                    //elementReviews.appendChild(servPara);
-                    reviewDiv.appendChild(servPara);
+                        var shipPara = document.createElement("h4");
+                        var shipNode = document.createTextNode("Shipping:" + userReviews[i].get("shippingRating"));
+                        shipPara.appendChild(shipNode);
+                        //elementReviews.appendChild(shipPara);
+                        reviewDiv.appendChild(shipPara);
 
-                    var qualPara = document.createElement("h4");
-                    var qualNode = document.createTextNode("Quality:" + userReviews[i].get("qualityRating"));
-                    qualPara.appendChild(qualNode);
-                    //elementReviews.appendChild(qualPara);
-                   reviewDiv.appendChild(qualPara);
+                        var servPara = document.createElement("h4");
+                        var servNode = document.createTextNode("Service:" + userReviews[i].get("serviceRating"));
+                        servPara.appendChild(servNode);
+                        //elementReviews.appendChild(servPara);
+                        reviewDiv.appendChild(servPara);
 
-                   var commentPara = document.createElement("p");
-                   var commentNode = document.createTextNode(userReviews[i].get("comment"));
-                   commentPara.appendChild(commentNode);
-                   //elementReviews.appendChild(commentPara);
-                   reviewDiv.appendChild(commentPara);
-                   var lineBreak = document.createElement("hr");
-                   reviewDiv.appendChild(lineBreak);
+                        var qualPara = document.createElement("h4");
+                        var qualNode = document.createTextNode("Quality:" + userReviews[i].get("qualityRating"));
+                        qualPara.appendChild(qualNode);
+                        //elementReviews.appendChild(qualPara);
+                       reviewDiv.appendChild(qualPara);
 
-                   elementReviews.appendChild(reviewDiv);
+                       var commentPara = document.createElement("p");
+                       var commentNode = document.createTextNode(userReviews[i].get("comment"));
+                       commentPara.appendChild(commentNode);
+                        
+                       var foundHelpfulPara = document.createElement("p");
+                       var foundHelpfulNode = document.createTextNode(userReviews[i].get("score") + " user\(s\) found this review helpful")
+                       foundHelpfulPara.appendChild(foundHelpfulNode);
+                       //elementReviews.appendChild(commentPara);
+                       reviewDiv.appendChild(commentPara);
+                       reviewDiv.appendChild(foundHelpfulPara);
+                       reviewDiv.appendChild(flagButton);
+                       reviewDiv.appendChild(helpfulButton);
+                       reviewDiv.appendChild(notHelpfulButton);
+                       var lineBreak = document.createElement("hr");
+                       reviewDiv.appendChild(lineBreak);
 
+                       elementReviews.appendChild(reviewDiv);
+                    }
+
+               }
+               service /= userReviews.length;
+               shipping /= userReviews.length;
+               quality /= userReviews.length;
+               
+                           
+                //company customer service rating
+                var companyService = document.getElementById("companyService");
+                para = document.createElement("p");
+                node = document.createTextNode("Customer Service: " + service);
+                para.appendChild(node)
+                companyService.appendChild(para);
+
+                //company shipping rating
+                var companyShipping = document.getElementById("companyShipping");
+                para = document.createElement("p");
+                node = document.createTextNode("Shipping: " + shipping);
+                para.appendChild(node)
+                companyShipping.appendChild(para);
+
+                //company quality rating
+                var companyQuality = document.getElementById("companyQuality");
+                para = document.createElement("p");
+                node = document.createTextNode("Quality: " + quality);
+                para.appendChild(node)
+                companyQuality.appendChild(para);
+               if(!userReviewExists) {
+                   document.getElementById("writeReview").style.display = '';
                }
            } 
         });
@@ -328,4 +401,15 @@ function setPicture() {
             alert("Could not fetch user.");
         }
     });*/
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
 }
