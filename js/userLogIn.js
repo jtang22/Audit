@@ -399,7 +399,6 @@ function setPicture() {
             alert("Could not fetch user.");
         }
     });*/
-}
 
 function getCookie(cname) {
     var name = cname + "=";
