@@ -203,7 +203,7 @@ function loadCompanyData() {
             var para;
             var node;
             name = results[0].get("Name");
-            var image = results[0].get("Image");
+            var imageFile = results[0].get("Image");
             var url = results[0].get("Url");
             /*var service = results[0].get("Service");
             var shipping = results[0].get("Shipping");
@@ -224,6 +224,12 @@ function loadCompanyData() {
             para.appendChild(node)
             companyWeb.appendChild(para);
             
+            if(imageFile != null) {
+                var imageURL = imageFile.url()
+                document.getElementById("companyImage").setAttribute("src",imageURL);        
+            }
+            
+        
         },
         error: function(object, error) {
             //error checking stuff
