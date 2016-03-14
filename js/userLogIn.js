@@ -357,19 +357,19 @@ function loadCompanyData() {
                for(var i = 0; i < Math.floor(totalRating); i++) {
                    switch(i) {
                        case 0:
-                            ratingButton = document.getElementById("rating1");
+                            ratingButton = document.getElementById("avgRating1");
                            break;
                        case 1:
-                           ratingButton = document.getElementById("rating2");
+                           ratingButton = document.getElementById("avgRating2");
                            break;
                        case 2:
-                           ratingButton = document.getElementById("rating3");
+                           ratingButton = document.getElementById("avgRating3");
                            break;
                        case 3:
-                           ratingButton = document.getElementById("rating4");
+                           ratingButton = document.getElementById("avgRating4");
                            break;
                        case 4:
-                           ratingButton = document.getElementById("rating5");
+                           ratingButton = document.getElementById("avgRating5");
                            break;
                            
                    }
@@ -378,6 +378,12 @@ function loadCompanyData() {
                        e.preventDefault();
                    });
                }
+               document.getElementById("avgRating1").disabled = true;  
+               document.getElementById("avgRating2").disabled = true;  
+               document.getElementById("avgRating3").disabled = true;  
+               document.getElementById("avgRating4").disabled = true;  
+               document.getElementById("avgRating5").disabled = true;   
+
                
                 
                 //company customer service rating
