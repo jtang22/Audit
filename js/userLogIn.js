@@ -353,59 +353,32 @@ function loadCompanyData() {
                quality /= userReviews.length;
                
                var totalRating = (service + shipping + quality) / 3;
-               var ratingButton;
-               for(var i = 0; i < Math.floor(totalRating); i++) {
-                   switch(i) {
-                       case 0:
-                            ratingButton = document.getElementById("avgRating1");
-                           break;
-                       case 1:
-                           ratingButton = document.getElementById("avgRating2");
-                           break;
-                       case 2:
-                           ratingButton = document.getElementById("avgRating3");
-                           break;
-                       case 3:
-                           ratingButton = document.getElementById("avgRating4");
-                           break;
-                       case 4:
-                           ratingButton = document.getElementById("avgRating5");
-                           break;
-                           
-                   }
-                   ratingButton.checked = true;
-                   ratingButton.click(function(e) {
-                       e.preventDefault();
-                   });
-               }
-               document.getElementById("avgRating1").disabled = true;  
-               document.getElementById("avgRating2").disabled = true;  
-               document.getElementById("avgRating3").disabled = true;  
-               document.getElementById("avgRating4").disabled = true;  
-               document.getElementById("avgRating5").disabled = true;   
-
-               
+               setStars("avgRating", totalRating)
+               setStars("shippingRating", service)
+               setStars("qualityRating", quality)
+               setStars("serviceRating", service)
                 
-                //company customer service rating
-                var companyService = document.getElementById("companyService");
-                para = document.createElement("p");
-                node = document.createTextNode("Customer Service: " + service);
-                para.appendChild(node)
-                companyService.appendChild(para);
-
-                //company shipping rating
-                var companyShipping = document.getElementById("companyShipping");
-                para = document.createElement("p");
-                node = document.createTextNode("Shipping: " + shipping);
-                para.appendChild(node)
-                companyShipping.appendChild(para);
-
-                //company quality rating
-                var companyQuality = document.getElementById("companyQuality");
-                para = document.createElement("p");
-                node = document.createTextNode("Quality: " + quality);
-                para.appendChild(node)
-                companyQuality.appendChild(para);
+                
+//                //company customer service rating
+//                var companyService = document.getElementById("companyService");
+//                para = document.createElement("p");
+//                node = document.createTextNode("Customer Service: " + service);
+//                para.appendChild(node)
+//                companyService.appendChild(para);
+//
+//                //company shipping rating
+//                var companyShipping = document.getElementById("companyShipping");
+//                para = document.createElement("p");
+//                node = document.createTextNode("Shipping: " + shipping);
+//                para.appendChild(node)
+//                companyShipping.appendChild(para);
+//
+//                //company quality rating
+//                var companyQuality = document.getElementById("companyQuality");
+//                para = document.createElement("p");
+//                node = document.createTextNode("Quality: " + quality);
+//                para.appendChild(node)
+//                companyQuality.appendChild(para);
                if(!userReviewExists) {
                    document.getElementById("writeReview").style.display = '';
                }
@@ -453,4 +426,37 @@ function getCookie(cname) {
         if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
     }
     return "";
+}
+
+
+function setStars(fieldName, totalRating) {
+    var ratingButton;
+    for(var i = 0; i < Math.floor(totalRating); i++) {
+        switch(i) {
+           case 0:
+                ratingButton = document.getElementById(fieldName + "1");
+                break;
+            case 1:
+                ratingButton = document.getElementById(fieldName + "2");
+                break;
+            case 2:
+                ratingButton = document.getElementById(fieldName + "3");
+                break;
+            case 3:
+                ratingButton = document.getElementById(fieldName + "4");
+                break;
+            case 4:
+                ratingButton = document.getElementById(fieldName + "5");
+                break;
+        }
+        ratingButton.checked = true;
+        ratingButton.click(function(e) {
+           e.preventDefault();
+        });
+    }
+    document.getElementById(fieldName + "1").disabled = true;  
+    document.getElementById(fieldName + "2").disabled = true;  
+    document.getElementById(fieldName + "3").disabled = true;  
+    document.getElementById(fieldName + "4").disabled = true;  
+    document.getElementById(fieldName + "5").disabled = true;   
 }
