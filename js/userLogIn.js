@@ -117,8 +117,13 @@ function loadUserData() {
     
     //Get user profile picture
     var imageFile = user.get("picture");
-    var imageURL = imageFile.url();
-    document.getElementById("profilepic").src = imageURL;
+    if(imageFile != null) {
+        var imageURL = imageFile.url();
+        document.getElementById("profilepic").src = imageURL;
+    }
+    else {
+        document.getElementById("profilepic").src = "https://u.o0bc.com/avatars/no-user-image.gif";
+    }
     
     //displays all reviews
     
@@ -232,6 +237,9 @@ function loadCompanyData() {
             if(imageFile != null) {
                 var imageURL = imageFile.url()
                 document.getElementById("companyImage").setAttribute("src",imageURL);        
+            }
+            else {
+                document.getElementById("companyImage").setAttribute("src", "https://u.o0bc.com/avatars/no-user-image.gif");
             }
             
         
