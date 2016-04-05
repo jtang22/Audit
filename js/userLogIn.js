@@ -152,7 +152,15 @@ function loadUserData() {
                 reviewDiv.className = 'row';
                
                 var companyPara = document.createElement("h2");
-                var companyNode = document.createTextNode(userReviews[i].get("companyId"));
+                var companyName = userReviews[i].get("companyId");
+                companyPara.onclick = (function() {
+                        var company = companyName;
+                        return function() {
+                            document.cookie = "companySearch=" + company;
+                            window.location.href = "companyProfile.html";
+                        }
+                    })();
+                var companyNode = document.createTextNode(companyName);
                 companyPara.appendChild(companyNode);
                 reviewDiv.appendChild(companyPara);
                 //elementReviews.appendChild(companyDiv);
@@ -317,7 +325,7 @@ function loadCompanyData() {
                     if(userReviews[i].get("flagged") != true) {
                         reviewDiv.className = 'row';
 
-                        var companyPara = document.createElement("h2");
+                        var companyPara = document.createElement("h4");
                         var companyNode = document.createTextNode(userReviews[i].get("userId"));
                         companyPara.appendChild(companyNode);
                         reviewDiv.appendChild(companyPara);
