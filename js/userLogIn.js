@@ -115,6 +115,11 @@ function loadUserData() {
     para.appendChild(node);
     elementName.appendChild(para);
     
+    //Get user profile picture
+    var imageFile = user.get("picture");
+    var imageURL = imageFile.url();
+    document.getElementById("profilepic").src = imageURL;
+    
     //displays all reviews
     
     var elementReviews = document.getElementById("displayReview");
@@ -393,11 +398,14 @@ function setPicture() {
     var name = user.get("firstname") + " " + user.get("lastname");
     var parseImage = new Parse.File(name, picture[0]);
     user.set("picture", parseImage);
-    user.save();
+    user.save().then(function() {;
 
-    var profilePhoto = user.get("picture");
-    //document.getElementById("profilepic").src = profilePhoto.url();
-    alert(parseImage.url());
+        var profilePhoto = user.get("picture");
+        //Get user profile picture
+        var imageFile = user.get("picture");
+        var imageURL = imageFile.url();
+        document.getElementById("profilepic").src = imageURL;
+    });
 }
     /*user = Parse.User.current();
     user.fetch({
