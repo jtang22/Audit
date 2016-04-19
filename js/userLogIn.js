@@ -223,9 +223,7 @@ function loadCompanyData() {
             name = results[0].get("Name");
             var imageFile = results[0].get("Image");
             var url = results[0].get("Url");
-            /*var service = results[0].get("Service");
-            var shipping = results[0].get("Shipping");
-            var quality = results[0].get("Quality");*/
+
             results[0].set("Searched", false);
             results[0].save();
 
@@ -271,6 +269,10 @@ function loadCompanyData() {
         var shipping = 0;
         var quality = 0;
         var service = 0;
+        var reviewTable = document.getElementById("reviewTable");
+        var infoCell;
+        var reviewCell;
+        var curRow;
         query.equalTo("companyId", name);
         query.find({
            success: function(userReviews) {
@@ -281,9 +283,10 @@ function loadCompanyData() {
                         }
                     }
                     var reviewDiv = document.createElement("div");
-                    
+                    curRow = reviewTable.insertRow(0);
+                    infoCell = curRow.insertCell(0);
+                    reviewCell = curRow.insertCell(1);
                     flagButton = document.createElement("button");
-                    //flagButton.setAttribute("id", userReviews[i].get("userId"));
                     flagButton.innerHTML = "Flag";
                     flagButton.onclick = (function() {
                         var thisNdx = i;
@@ -324,48 +327,82 @@ function loadCompanyData() {
                     quality += userReviews[i].get("qualityRating");
                     if(userReviews[i].get("flagged") != true) {
                         reviewDiv.className = 'row';
+                        var userDiv = document.createElement('div');
+                        var commentDiv = document.createElement('div');
+                        var userImg = document.createElement("img");
+                        var imgUrl;
 
+                        userDiv.style.cssFloat = "left";
+                        userDiv.style.clear = "both";
+                        commentDiv.className = 'userReview';
+                        
                         var companyPara = document.createElement("h4");
                         var companyNode = document.createTextNode(userReviews[i].get("userId"));
                         companyPara.appendChild(companyNode);
-                        reviewDiv.appendChild(companyPara);
-                        //elementReviews.appendChild(companyDiv);
+                        infoCell.appendChild(companyPara);
+                        userDiv.appendChild(companyPara);
+                        
+                        //Get user profile picture
+                        var imgQuery = new Parse.Query(Parse.User);
+                        imgQuery.equalTo("username", userReviews[i].get("userId"));
+                        imgQuery.find({
+                            success:function(user) {
+                                var imageFile = user[0].get("picture");
+                                if(imageFile != null) {
+                                imgUrl = imageFile.url();
 
+                                }
+                                else {
+                                    imgUrl = "https://u.o0bc.com/avatars/no-user-image.gif";
+                                }
+
+                                userImg.setAttribute("height", "50");
+                                userImg.setAttribute("width", "50");
+                                userImg.src = imgUrl;
+                                userDiv.appendChild(userImg);
+                                infoCell.appendChild(userImg);
+                                
+                            }
+                        });
+                        
                         var shipPara = document.createElement("h4");
                         var shipNode = document.createTextNode("Shipping:" + userReviews[i].get("shippingRating"));
                         shipPara.appendChild(shipNode);
-                        //elementReviews.appendChild(shipPara);
-                        reviewDiv.appendChild(shipPara);
-
+                        userDiv.appendChild(shipPara);
+                        infoCell.appendChild(shipPara);
                         var servPara = document.createElement("h4");
                         var servNode = document.createTextNode("Service:" + userReviews[i].get("serviceRating"));
                         servPara.appendChild(servNode);
-                        //elementReviews.appendChild(servPara);
-                        reviewDiv.appendChild(servPara);
+                        userDiv.appendChild(servPara);
+                        infoCell.appendChild(servPara);
 
                         var qualPara = document.createElement("h4");
                         var qualNode = document.createTextNode("Quality:" + userReviews[i].get("qualityRating"));
                         qualPara.appendChild(qualNode);
-                        //elementReviews.appendChild(qualPara);
-                       reviewDiv.appendChild(qualPara);
+                        userDiv.appendChild(qualPara);
+                        infoCell.appendChild(qualPara);
 
-                       var commentPara = document.createElement("p");
-                       var commentNode = document.createTextNode(userReviews[i].get("comment"));
-                       commentPara.appendChild(commentNode);
+                        var commentPara = document.createElement("p");
+                        var commentNode = document.createTextNode(userReviews[i].get("comment"));
+                        commentPara.appendChild(commentNode);
+                        reviewCell.appendChild(commentPara);
                         
-                       var foundHelpfulPara = document.createElement("p");
-                       var foundHelpfulNode = document.createTextNode(userReviews[i].get("score") + " user\(s\) found this review helpful");
-                       foundHelpfulPara.appendChild(foundHelpfulNode);
-                       //elementReviews.appendChild(commentPara);
-                       reviewDiv.appendChild(commentPara);
-                       reviewDiv.appendChild(foundHelpfulPara);
-                       reviewDiv.appendChild(flagButton);
-                       reviewDiv.appendChild(helpfulButton);
-                       reviewDiv.appendChild(notHelpfulButton);
-                       var lineBreak = document.createElement("hr");
-                       reviewDiv.appendChild(lineBreak);
+                        var foundHelpfulPara = document.createElement("p");
+                        var foundHelpfulNode = document.createTextNode(userReviews[i].get("score") + " user\(s\) found this review helpful");
+                        foundHelpfulPara.appendChild(foundHelpfulNode);
+                        commentDiv.appendChild(commentPara);
+                        reviewDiv.appendChild(userDiv);
+                        reviewDiv.appendChild(commentDiv);
+                        var br = document.createElement("br");
+                        reviewDiv.appendChild(br);
+                        reviewDiv.appendChild(foundHelpfulPara);
+                        reviewDiv.appendChild(flagButton);
+                        reviewDiv.appendChild(helpfulButton);
+                        reviewDiv.appendChild(notHelpfulButton);
+                        var lineBreak = document.createElement("hr");
+                        reviewDiv.appendChild(lineBreak);
+                        //elementReviews.appendChild(reviewDiv);
 
-                       elementReviews.appendChild(reviewDiv);
                     }
 
                }
@@ -414,7 +451,7 @@ function setPicture() {
     var name = user.get("firstname") + " " + user.get("lastname");
     var parseImage = new Parse.File(name, picture[0]);
     user.set("picture", parseImage);
-    user.save().then(function() {;
+    user.save().then(function() {
 
         var profilePhoto = user.get("picture");
         //Get user profile picture
