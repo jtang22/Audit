@@ -135,6 +135,27 @@ function loadUserData() {
     query.find({
        success: function(userReviews) {
                        // number of reviews
+            var reviewTable = document.createElement("TABLE");
+                reviewTable.style.width = '800px';
+            var row = document.createElement("TR");
+            var cCell = document.createElement("TD");
+            var rCell = document.createElement("TD");
+            var comCell = document.createElement("TD");
+            var helpCell = document.createElement("TD");
+           
+            cCell.appendChild(document.createTextNode("Company"));
+            rCell.appendChild(document.createTextNode("Ratings"));
+            comCell.appendChild(document.createTextNode("Comment"));
+            helpCell.appendChild(document.createTextNode("Helpful"));
+           
+            row.appendChild(cCell);
+            row.appendChild(rCell);
+            row.appendChild(comCell);
+            row.appendChild(helpCell);
+            row.style.padding = 10;
+           
+            reviewTable.appendChild(row);
+            
             var elementNumReview = document.getElementById("numReviews");
             var numReviews = userReviews.length;
             para = document.createElement("p");
@@ -146,10 +167,19 @@ function loadUserData() {
             }
             para.appendChild(node);
             elementNumReview.appendChild(para);
-           
+                      
            for(var i = 0; i < userReviews.length; i++) {
                 var reviewDiv = document.createElement("div");
                 reviewDiv.className = 'row';
+                var firstRow = document.createElement("TR");
+                firstRow.style.height = '80px';
+                        firstRow.style.textAlign = 'left';
+                        firstRow.style.verticalAlign = 'top';
+                        firstRow.style.padding = 0;
+                var companyCell = document.createElement("TD");
+                var ratingCell = document.createElement("TD");
+                var commentCell = document.createElement("TD");
+                var helpfulCell = document.createElement("TD");
                
                 var companyPara = document.createElement("h2");
                 var companyName = userReviews[i].get("companyId");
@@ -162,43 +192,62 @@ function loadUserData() {
                     })();
                 var companyNode = document.createTextNode(companyName);
                 companyPara.appendChild(companyNode);
-                reviewDiv.appendChild(companyPara);
+                //reviewDiv.appendChild(companyPara);
                 //elementReviews.appendChild(companyDiv);
                
                 var shipPara = document.createElement("h4");
                 var shipNode = document.createTextNode("Shipping:" + userReviews[i].get("shippingRating"));
                 shipPara.appendChild(shipNode);
                 //elementReviews.appendChild(shipPara);
-                reviewDiv.appendChild(shipPara);
+                //reviewDiv.appendChild(shipPara);
                
                 var servPara = document.createElement("h4");
                 var servNode = document.createTextNode("Service:" + userReviews[i].get("serviceRating"));
                 servPara.appendChild(servNode);
                 //elementReviews.appendChild(servPara);
-                reviewDiv.appendChild(servPara);
+                //reviewDiv.appendChild(servPara);
                
                 var qualPara = document.createElement("h4");
                 var qualNode = document.createTextNode("Quality:" + userReviews[i].get("qualityRating"));
                 qualPara.appendChild(qualNode);
                 //elementReviews.appendChild(qualPara);
-               reviewDiv.appendChild(qualPara);
+               //reviewDiv.appendChild(qualPara);
                
                var commentPara = document.createElement("p");
                var commentNode = document.createTextNode(userReviews[i].get("comment"));
                commentPara.appendChild(commentNode);
                //elementReviews.appendChild(commentPara);
-               reviewDiv.appendChild(commentPara);
+               //reviewDiv.appendChild(commentPara);
                
                var foundHelpfulPara = document.createElement("p");
                var foundHelpfulNode = document.createTextNode(userReviews[i].get("score") + " user\(s\) found this review helpful");
                foundHelpfulPara.appendChild(foundHelpfulNode);
-               reviewDiv.appendChild(foundHelpfulPara);
+               //reviewDiv.appendChild(foundHelpfulPara);
                
                var lineBreak = document.createElement("hr");
-               reviewDiv.appendChild(lineBreak);
-               elementReviews.appendChild(reviewDiv);
-
+               //reviewDiv.appendChild(lineBreak);
+               //elementReviews.appendChild(reviewDiv);
+               
+               companyCell.appendChild(companyNode);
+               
+               ratingCell.appendChild(shipNode);
+               ratingCell.appendChild(document.createElement("br"));
+               ratingCell.appendChild(servNode);
+               ratingCell.appendChild(document.createElement("br"));
+               ratingCell.appendChild(qualNode);
+               
+               commentCell.appendChild(commentNode);
+               
+               helpfulCell.appendChild(foundHelpfulNode);
+               
+               firstRow.appendChild(companyCell);
+               firstRow.appendChild(ratingCell);
+               firstRow.appendChild(commentCell);
+               firstRow.appendChild(helpfulCell);
+               
+               reviewTable.appendChild(firstRow);
            }
+           elementReviews.appendChild(reviewTable);
        } 
     });
     
