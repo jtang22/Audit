@@ -137,22 +137,32 @@ function loadUserData() {
                        // number of reviews
             var reviewTable = document.createElement("TABLE");
                 reviewTable.style.width = '800px';
+                reviewTable.style.borderCollapse = "collapse";
             var row = document.createElement("TR");
+            row.style.height = '50px';
+            var boldCompany = document.createElement("b");
+            var boldRatings = document.createElement("b");
+            var boldComment = document.createElement("b");
+            var boldHelp = document.createElement("b");
             var cCell = document.createElement("TD");
             var rCell = document.createElement("TD");
             var comCell = document.createElement("TD");
             var helpCell = document.createElement("TD");
            
-            cCell.appendChild(document.createTextNode("Company"));
-            rCell.appendChild(document.createTextNode("Ratings"));
-            comCell.appendChild(document.createTextNode("Comment"));
-            helpCell.appendChild(document.createTextNode("Helpful"));
+            boldCompany.appendChild(document.createTextNode("Company"));
+            boldRatings.appendChild(document.createTextNode("Ratings"));
+            boldComment.appendChild(document.createTextNode("Comment"));
+            boldHelp.appendChild(document.createTextNode("Helpful"));
+           
+            cCell.appendChild(boldCompany);
+            rCell.appendChild(boldRatings);
+            comCell.appendChild(boldComment);
+            helpCell.appendChild(boldHelp);
            
             row.appendChild(cCell);
             row.appendChild(rCell);
             row.appendChild(comCell);
             row.appendChild(helpCell);
-            row.style.padding = 10;
            
             reviewTable.appendChild(row);
             
@@ -196,19 +206,19 @@ function loadUserData() {
                 //elementReviews.appendChild(companyDiv);
                
                 var shipPara = document.createElement("h4");
-                var shipNode = document.createTextNode("Shipping:" + userReviews[i].get("shippingRating"));
+                var shipNode = document.createTextNode("Shipping: " + userReviews[i].get("shippingRating"));
                 shipPara.appendChild(shipNode);
                 //elementReviews.appendChild(shipPara);
                 //reviewDiv.appendChild(shipPara);
                
                 var servPara = document.createElement("h4");
-                var servNode = document.createTextNode("Service:" + userReviews[i].get("serviceRating"));
+                var servNode = document.createTextNode("Service: " + userReviews[i].get("serviceRating"));
                 servPara.appendChild(servNode);
                 //elementReviews.appendChild(servPara);
                 //reviewDiv.appendChild(servPara);
                
                 var qualPara = document.createElement("h4");
-                var qualNode = document.createTextNode("Quality:" + userReviews[i].get("qualityRating"));
+                var qualNode = document.createTextNode("Quality: " + userReviews[i].get("qualityRating"));
                 qualPara.appendChild(qualNode);
                 //elementReviews.appendChild(qualPara);
                //reviewDiv.appendChild(qualPara);
