@@ -268,12 +268,12 @@ function loadCompanyData() {
         query.equalTo("companyId", name);
         query.find({
            success: function(userReviews) {       
-                //sets up a table
-                var reviewTable = document.createElement("TABLE");
-                reviewTable.style.width = '800px';
-
-                for(var i = 0; i < userReviews.length; i++) {
-                    //checks if user has written a review.
+               //sets up a table
+               var reviewTable = document.createElement("TABLE");
+               reviewTable.style.width = '2000px';
+               
+               for(var i = 0; i < userReviews.length; i++) {
+                   //checks if user has written a review.
                     if(user) {          
                         if(user.get("username").localeCompare(userReviews[i].get("userId"))) {
                             userReviewExists = true;
@@ -289,6 +289,8 @@ function loadCompanyData() {
                     if(userReviews[i].get("flagged") != true) {
                         //sets up a new row
                         var firstRow = document.createElement("TR");
+                        firstRow.style.verticalAlign = 'top';
+                        firstRow.style.padding = 0;
                         var secondRow = document.createElement("TR");
                         secondRow.style.height = '80px';
                         secondRow.style.textAlign = 'left';
@@ -297,16 +299,16 @@ function loadCompanyData() {
                         
                         //sets up new cells
                         var userCell = document.createElement("TD");
-                        userCell.style.verticalAlign = 'top';
+                        userCell.style.textAlign = 'center';
+
                         var commentCell = document.createElement("TD");
                         commentCell.style.textAlign = 'left';
-                        commentCell.style.verticalAlign = 'top';
-                        commentCell.style.padding = 0;
                         var ratingsCell = document.createElement("TD");
                         var buttonsCell = document.createElement("TD");
 
                         //obtain's user's name
-                        var userName = document.createTextNode((userReviews[i]).get("userId"));
+                        var userName = document.createElement("h4");
+                        var userNode = document.createTextNode((userReviews[i]).get("userId"));
 
                         //Get user profile picture
                         var userImg = document.createElement("img");
@@ -326,11 +328,34 @@ function loadCompanyData() {
                                 userImg.src = imgUrl;
                             }
                         });
-
+                        
                         //obtain ratings
-                        var shipNode = document.createTextNode("Shipping:" + userReviews[i].get("shippingRating"));
-                        var servNode = document.createTextNode("Service:" + userReviews[i].get("serviceRating"));
-                        var qualNode = document.createTextNode("Quality:" + userReviews[i].get("qualityRating"));
+                        var ratingsTable = document.createElement("TABLE");
+                        var shippingRow = document.createElement("TR");
+                        var serviceRow = document.createElement("TR");
+                        var qualityRow = document.createElement("TR");
+                        
+                        var shippingTextCell = document.createElement("TD");
+                        var shippingText = document.createTextNode("Shipping: ");
+                        var shippingStarsCell = document.createElement("TD");
+                        shippingRow.style.width = '500';
+                        var shippingStars = createStars("Shipping", userReviews[i].get("shippingRating"));
+                        setStars("userShippingRating", userReviews[i].get("shippingRating"));
+                        shippingStarsCell.appendChild(shippingStars);
+                        
+                    
+                        shippingTextCell.appendChild(shippingText);
+                        shippingRow.appendChild(shippingTextCell);
+                        shippingRow.appendChild(shippingStarsCell);
+                        ratingsTable.appendChild(shippingRow);
+                        
+                        var serviceText = document.createTextNode("Service: ");
+                        var qualityText = document.createTextNode("Quality: ");
+    
+                        
+//                        var shipNode = document.createTextNode("Shipping:" + userReviews[i].get("shippingRating"));
+//                        var servNode = document.createTextNode("Service:" + userReviews[i].get("serviceRating"));
+//                        var qualNode = document.createTextNode("Quality:" + userReviews[i].get("qualityRating"));
 
                         //obtain comment
                         var commentNode = document.createTextNode(userReviews[i].get("comment"));
@@ -376,17 +401,17 @@ function loadCompanyData() {
                             }
                         })();
 
-
                         //add values to cells
                         //add user info to the userCell
+                        userName.appendChild(userNode);
                         userCell.appendChild(userName);
-                        userCell.appendChild(document.createElement("br"));
                         userCell.appendChild(userImg);
 
                         //add ratings to the ratingsCell
-                        ratingsCell.appendChild(shipNode); ratingsCell.appendChild(document.createElement("br"));
-                        ratingsCell.appendChild(servNode); ratingsCell.appendChild(document.createElement("br"));
-                        ratingsCell.appendChild(qualNode);
+//                        ratingsCell.appendChild(shipNode); ratingsCell.appendChild(document.createElement("br"));
+//                        ratingsCell.appendChild(servNode); ratingsCell.appendChild(document.createElement("br"));
+//                        ratingsCell.appendChild(qualNode);
+                        ratingsCell.appendChild(ratingsTable);
 
                         //add comment and buttons to the commentCell
                         commentCell.appendChild(commentNode);
@@ -504,4 +529,71 @@ function setStars(fieldName, totalRating) {
     document.getElementById(fieldName + "3").disabled = true;  
     document.getElementById(fieldName + "4").disabled = true;  
     document.getElementById(fieldName + "5").disabled = true;   
+}
+
+function createStars(starType, ratingNum) {
+    var id = "user" + starType + "Rating";
+    
+    var displayStars = document.createElement("SPAN");
+    displayStars.className = "displayRate";
+    
+    var userStarFive = document.createElement("INPUT");
+    userStarFive.setAttribute("type", "radio");
+    userStarFive.setAttribute("value", "5");
+    userStarFive.setAttribute("id", id + "5")
+    var userStarFiveLabel = document.createElement("LABEL");
+    userStarFiveLabel.htmlFor = id + "5"
+    userStarFive.disabled = true;
+    userStarFive.appendChild(userStarFiveLabel);
+    
+    var userStarFour = document.createElement("INPUT");
+    userStarFour.setAttribute("type", "radio");
+    userStarFour.setAttribute("value", "4");
+    userStarFour.setAttribute("id", id + "4")
+    var userStarFourLabel = document.createElement("LABEL");
+    userStarFourLabel.htmlFor = id + "4"
+    userStarFour.disabled = true;
+    userStarFour.appendChild(userStarFourLabel);
+    
+    var userStarThree = document.createElement("INPUT");
+    userStarThree.setAttribute("type", "radio");
+    userStarThree.setAttribute("value", "3");
+    userStarThree.setAttribute("id", id + "3")
+    var userStarThreeLabel = document.createElement("LABEL");
+    userStarThreeLabel.htmlFor = id + "3"
+    userStarThree.disabled = true;
+    userStarThree.appendChild(userStarThreeLabel);
+    
+    var userStarTwo = document.createElement("INPUT");
+    userStarTwo.setAttribute("type", "radio");
+    userStarTwo.setAttribute("value", "2");
+    userStarTwo.setAttribute("id", id + "2")
+    var userStarTwoLabel = document.createElement("LABEL");
+    userStarTwoLabel.htmlFor = id + "2"
+    userStarTwo.disabled = true;
+    userStarTwo.appendChild(userStarTwoLabel);
+    
+    var userStarOne = document.createElement("INPUT");
+    userStarOne.setAttribute("type", "radio");
+    userStarOne.setAttribute("value", "1");
+    userStarOne.setAttribute("id", id + "1")
+    var userStarOneLabel = document.createElement("LABEL");
+    userStarOneLabel.htmlFor = id + "1"
+    userStarOne.disabled = true;
+    userStarOne.appendChild(userStarOneLabel);
+    
+    displayStars.appendChild(userStarOne);
+    displayStars.appendChild(userStarTwo);
+    displayStars.appendChild(userStarThree);
+    displayStars.appendChild(userStarFour);
+    displayStars.appendChild(userStarFive);
+    //setStars(id, ratingNum);
+    
+//    var starName;
+//    
+//    for(var i = 0; i < ratingNum; i++) {
+//        starName = document.getElementById(id + i);
+//        starName.checked = true;
+//    }
+    return displayStars;
 }
