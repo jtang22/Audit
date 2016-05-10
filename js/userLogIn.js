@@ -266,8 +266,8 @@ function loadUserData() {
 function loadCompanyData() {
     checkUserLoggedIn();
     var name;
-//    var image;
-//    var url;
+    var reviewTable;
+    var userReviewExists = false;
     
     var Company = Parse.Object.extend("Company");
     var query = new Parse.Query(Company);
@@ -311,191 +311,199 @@ function loadCompanyData() {
             //error checking stuff
         }
     }).then(function() {
-        var elementReviews = document.getElementById("displayReview");
         var Review = Parse.Object.extend("Review");
-        var query = new Parse.Query(Review);    
-        var flagButton;
-        var helpfulText = "Was this review helpful?";
-        var helpfulButton;
-        var notHelpfulButton;
-        var userReviewExists = false;
-        var user = Parse.User.current();
-        var shipping = 0;
-        var quality = 0;
-        var service = 0;
-        
+        query = new Parse.Query(Review);
         query.equalTo("companyId", name);
         query.find({
-           success: function(userReviews) {       
+           success: function(userReviews) {
                //sets up a table
-               var reviewTable = document.createElement("TABLE");
+               reviewTable = document.createElement("TABLE");
                reviewTable.style.width = '1500px';
-               
-               for(var i = 0; i < userReviews.length; i++) {
-                   //checks if user has written a review.
-                    if(user) {          
-                        if(user.get("username").localeCompare(userReviews[i].get("userId"))) {
-                            userReviewExists = true;
+               reviewTable.id = "reviewTable";
+               var shipping = 0;
+               var quality = 0;
+               var service = 0;
+               console.log("hello " + userReviews.length + " " + name);
+               userReviews.forEach(function(review) {
+                    //Get user profile picture
+                    var imgQuery = new Parse.Query(Parse.User);
+                    imgQuery.equalTo("username", review.get("userId"));
+                    imgQuery.find().then(function(foundUser) {
+                        var imageFile = foundUser[0].get("picture");
+                        var imgUrl;
+                        var userImg = document.createElement('img');
+                        if(imageFile != null) {
+                            imgUrl = imageFile.url();
                         }
-                    }
-                    
-                    //for company overall ratings
-                    service += userReviews[i].get("serviceRating");
-                    shipping += userReviews[i].get("shippingRating");
-                    quality += userReviews[i].get("qualityRating");
+                        else {
+                            imgUrl = "https://u.o0bc.com/avatars/no-user-image.gif";
+                        }
+                        userImg.setAttribute("height", "100");
+                        userImg.setAttribute("width", "100");
+                        userImg.src = imgUrl;
+                        /*var Review = Parse.Object.extend("Review");
+                        var revQuery = new Parse.Query(Review); */   
+                        var flagButton;
+                        var helpfulText = "Was this review helpful?";
+                        var helpfulButton;
+                        var notHelpfulButton;
+                        var user = Parse.User.current();
+                       //checks if user has written a review.
+                        if(user) {          
+                            if(user.get("username").localeCompare(review.get("userId"))) {
+                                userReviewExists = true;
+                            }
+                        }
+                        //for company overall ratings
+                        service += review.get("serviceRating");
+                        shipping += review.get("shippingRating");
+                        quality += review.get("qualityRating");
 
-                    //if review is not flag, add to page
-                    if(userReviews[i].get("flagged") != true) {
-                        //sets up a new row
-                        var firstRow = document.createElement("TR");
-                        firstRow.style.verticalAlign = 'top';
-                        firstRow.style.padding = 0;
-                        var secondRow = document.createElement("TR");
-                        secondRow.style.height = '80px';
-                        secondRow.style.textAlign = 'left';
-                        secondRow.style.verticalAlign = 'top';
-                        secondRow.style.padding = 0;
-                        
-                        //sets up new cells
-                        var userCell = document.createElement("TD");
-                        userCell.style.textAlign = 'center';
+                        //if review is not flag, add to page
+                        if(review.get("flagged") != true) {
+                            //sets up a new row
+                            var firstRow = document.createElement("TR");
+                            firstRow.style.verticalAlign = 'top';
+                            firstRow.style.padding = 0;
+                            var secondRow = document.createElement("TR");
+                            secondRow.style.height = '80px';
+                            secondRow.style.textAlign = 'left';
+                            secondRow.style.verticalAlign = 'top';
+                            secondRow.style.padding = 0;
 
-                        var commentCell = document.createElement("TD");
-                        commentCell.style.textAlign = 'left';
-                        var ratingsCell = document.createElement("TD");
-                        var buttonsCell = document.createElement("TD");
+                            //sets up new cells
+                            var userCell = document.createElement("TD");
+                            userCell.style.textAlign = 'center';
 
-                        //obtain's user's name
-                        var userName = document.createElement("h4");
-                        var userNode = document.createTextNode((userReviews[i]).get("userId"));
+                            var commentCell = document.createElement("TD");
+                            commentCell.style.textAlign = 'left';
+                            var ratingsCell = document.createElement("TD");
+                            var buttonsCell = document.createElement("TD");
 
-                        //Get user profile picture
-                        var userImg = document.createElement("img");
-                        var imgQuery = new Parse.Query(Parse.User);
-                        imgQuery.equalTo("username", userReviews[i].get("userId"));
-                        imgQuery.find({
-                            success:function(user) {
-                                var imageFile = user[0].get("picture");
-                                if(imageFile != null) {
-                                    imgUrl = imageFile.url();
+                            //obtain's user's name
+                            var userName = document.createElement("h4");
+                            var userNode = document.createTextNode((review).get("userId"));
+
+                            //obtain ratings
+                            var ratingsTable = document.createElement("TABLE");
+                            var shippingRow = document.createElement("TR");
+                            var serviceRow = document.createElement("TR");
+                            var qualityRow = document.createElement("TR");
+
+                            var shippingTextCell = document.createElement("TD");
+                            var shippingText = document.createTextNode("Shipping: ");
+                            var shippingStarsCell = document.createElement("TD");
+                            var shippingStars = createStars("Shipping", review.get("shippingRating"));
+                            shippingStarsCell.appendChild(shippingStars);
+                            shippingTextCell.appendChild(shippingText);
+                            shippingRow.appendChild(shippingTextCell);
+                            shippingRow.appendChild(shippingStarsCell);
+                            ratingsTable.appendChild(shippingRow);
+
+                            var serviceTextCell = document.createElement("TD");
+                            var serviceText = document.createTextNode("Service: ");
+                            var serviceStarsCell = document.createElement("TD");
+                            var serviceStars = createStars("Service", review.get("serviceRating"));
+                            serviceStarsCell.appendChild(serviceStars);
+                            serviceTextCell.appendChild(serviceText);
+                            serviceRow.appendChild(serviceTextCell);
+                            serviceRow.appendChild(serviceStarsCell);
+                            ratingsTable.appendChild(serviceRow);
+
+                            var qualityTextCell = document.createElement("TD");
+                            var qualityText = document.createTextNode("Quality: ");
+                            var qualityStarsCell = document.createElement("TD");
+                            var qualityStars = createStars("Quality", review.get("qualityRating"));
+                            qualityStarsCell.appendChild(qualityStars);
+                            qualityTextCell.appendChild(qualityText);
+                            qualityRow.appendChild(qualityTextCell);
+                            qualityRow.appendChild(qualityStarsCell);
+                            ratingsTable.appendChild(qualityRow);
+
+                            //obtain comment
+                            var commentNode = document.createTextNode(review.get("comment"));
+
+                            //creating the buttons
+                            flagButton = document.createElement("button");
+                            flagButton.innerHTML = "Flag";
+                            flagButton.onclick = (function() {
+                                return function() {
+                                    var thisReview = review;
+                                    thisReview.set("flagged", true);
+                                    thisReview.save();
                                 }
-                                else {
-                                    imgUrl = "https://u.o0bc.com/avatars/no-user-image.gif";
-                                }
-                                userImg.setAttribute("height", "50");
-                                userImg.setAttribute("width", "50");
-                                userImg.src = imgUrl;
-                            }
-                        });
-                        
-                        //obtain ratings
-                        var ratingsTable = document.createElement("TABLE");
-                        var shippingRow = document.createElement("TR");
-                        var serviceRow = document.createElement("TR");
-                        var qualityRow = document.createElement("TR");
-                        
-                        var shippingTextCell = document.createElement("TD");
-                        var shippingText = document.createTextNode("Shipping: ");
-                        var shippingStarsCell = document.createElement("TD");
-                        var shippingStars = createStars("Shipping", userReviews[i].get("shippingRating"));
-                        shippingStarsCell.appendChild(shippingStars);
-                        shippingTextCell.appendChild(shippingText);
-                        shippingRow.appendChild(shippingTextCell);
-                        shippingRow.appendChild(shippingStarsCell);
-                        ratingsTable.appendChild(shippingRow);
-                        
-                        var serviceTextCell = document.createElement("TD");
-                        var serviceText = document.createTextNode("Service: ");
-                        var serviceStarsCell = document.createElement("TD");
-                        var serviceStars = createStars("Service", userReviews[i].get("serviceRating"));
-                        serviceStarsCell.appendChild(serviceStars);
-                        serviceTextCell.appendChild(serviceText);
-                        serviceRow.appendChild(serviceTextCell);
-                        serviceRow.appendChild(serviceStarsCell);
-                        ratingsTable.appendChild(serviceRow);
-                        
-                        var qualityTextCell = document.createElement("TD");
-                        var qualityText = document.createTextNode("Quality: ");
-                        var qualityStarsCell = document.createElement("TD");
-                        var qualityStars = createStars("Quality", userReviews[i].get("qualityRating"));
-                        qualityStarsCell.appendChild(qualityStars);
-                        qualityTextCell.appendChild(qualityText);
-                        qualityRow.appendChild(qualityTextCell);
-                        qualityRow.appendChild(qualityStarsCell);
-                        ratingsTable.appendChild(qualityRow);
+                            })();
 
-                        //obtain comment
-                        var commentNode = document.createTextNode(userReviews[i].get("comment"));
-
-                        //creating the buttons
-                        flagButton = document.createElement("button");
-                        flagButton.innerHTML = "Flag";
-                        flagButton.onclick = (function() {
-                            var thisNdx = i;
-                            return function() {
-                                var thisReview = userReviews[thisNdx];
-                                thisReview.set("flagged", true);
-                                thisReview.save();
-                            }
-                        })();
-
-                        helpfulButton = document.createElement("button");
-                        helpfulButton.innerHTML = "Helpful";
-                        helpfulButton.onclick = (function() {
-                            var thisNdx = i;
-                            return function() {
-                                var thisReview = userReviews[thisNdx];
-                                var curScore = thisReview.get("score");
-                                curScore++;
-                                thisReview.set("score", curScore);
-                                thisReview.save();
-                            }
-                        })();
-
-                        notHelpfulButton = document.createElement("button");
-                        notHelpfulButton.innerHTML = "Not Helpful";
-                        notHelpfulButton.onclick = (function() {
-                            var thisNdx = i;
-                            return function() {
-                                var thisReview = userReviews[thisNdx];
-                                var curScore = thisReview.get("score");
-                                if(curScore > 0) {
-                                    curScore--;
+                            helpfulButton = document.createElement("button");
+                            helpfulButton.innerHTML = "Helpful";
+                            helpfulButton.onclick = (function() {
+                                return function() {
+                                    var thisReview = review;
+                                    var curScore = thisReview.get("score");
+                                    curScore++;
                                     thisReview.set("score", curScore);
                                     thisReview.save();
                                 }
-                            }
-                        })();
+                            })();
 
-                        //add values to cells
-                        //add user info to the userCell
-                        userName.appendChild(userNode);
-                        userCell.appendChild(userName);
-                        userCell.appendChild(userImg);
-                        userCell.style.width = '300px'
+                            notHelpfulButton = document.createElement("button");
+                            notHelpfulButton.innerHTML = "Not Helpful";
+                            notHelpfulButton.onclick = (function() {
+                                return function() {
+                                    var thisReview = review;
+                                    var curScore = thisReview.get("score");
+                                    if(curScore > 0) {
+                                        curScore--;
+                                        thisReview.set("score", curScore);
+                                        thisReview.save();
+                                    }
+                                }
+                            })();
+                            var helpfulNode = document.createTextNode(review.get("score") + " user(s) found this review helpful");
+                            var helpfulPara = document.createElement("p");
+                            helpfulPara.appendChild(helpfulNode);
+                            
+                            //add values to cells
+                            //add user info to the userCell
+                            userName.appendChild(userNode);
+                            userCell.appendChild(userName);
+                            userCell.appendChild(userImg);
+                            console.log(review.get("userId") + ": imageurl is: " + userImg.src);
+                            userCell.style.width = '300px';
+                            //userCell.appendChild(document.createElement("img"));
+                            
+                            //add ratings to the ratingsCell
+                            ratingsCell.appendChild(ratingsTable);
+                            ratingsCell.style.width = '300px';
 
-                        //add ratings to the ratingsCell
-                        ratingsCell.appendChild(ratingsTable);
-                        ratingsCell.style.width = '300px'
+                            //add comment and buttons to the commentCell
+                            commentCell.appendChild(commentNode);
+                            commentCell.appendChild(document.createElement("br"));  
+                            commentCell.appendChild(document.createElement("br"));
+                            commentCell.appendChild(document.createElement("br"));
+                            commentCell.appendChild(document.createElement("br"));
+                            commentCell.appendChild(document.createElement("br"));
+                            commentCell.appendChild(document.createElement("br"));
 
-                        //add comment and buttons to the commentCell
-                        commentCell.appendChild(commentNode);
-                        
-                        buttonsCell.appendChild(flagButton);
-                        buttonsCell.appendChild(helpfulButton);
-                        buttonsCell.appendChild(notHelpfulButton);
+                            commentCell.appendChild(helpfulPara);
+                            
+                            buttonsCell.appendChild(flagButton);
+                            buttonsCell.appendChild(helpfulButton);
+                            buttonsCell.appendChild(notHelpfulButton);
 
-                        //add cells to row
-                        firstRow.appendChild(userCell);
-                        firstRow.appendChild(ratingsCell);
-                        firstRow.appendChild(commentCell);
-                        reviewTable.appendChild(firstRow);
-                        secondRow.appendChild(document.createElement("TD"));
-                        secondRow.appendChild(document.createElement("TD"));
-                        secondRow.appendChild(buttonsCell);
-                        reviewTable.appendChild(secondRow);
-                    }
-                }
+                            //add cells to row
+                            firstRow.appendChild(userCell);
+                            firstRow.appendChild(ratingsCell);
+                            firstRow.appendChild(commentCell);
+                            reviewTable.appendChild(firstRow);
+                            secondRow.appendChild(document.createElement("TD"));
+                            secondRow.appendChild(document.createElement("TD"));
+                            secondRow.appendChild(buttonsCell);
+                            reviewTable.appendChild(secondRow);
+                        }
+                    });
+                });
+               var elementReviews = document.getElementById("displayReview");
                elementReviews.appendChild(reviewTable);
                
                service /= userReviews.length;
@@ -509,7 +517,7 @@ function loadCompanyData() {
                setStars("serviceRating", service);
                
                //disables to 'write review" button
-               if(!userReviewExists) {
+               if(userReviewExists) {
                    document.getElementById("writeReview").style.display = '';
                }
                
