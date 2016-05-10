@@ -106,14 +106,14 @@ function loadUserData() {
     var name;
     var numReviews;
     var reviews;
-    var elementName = document.getElementById("userName");
+    var userName = document.getElementById("userName");
     name = user.get("firstname") + " " + user.get("lastname");
     
     // member name label
     para = document.createElement("label");
     node = document.createTextNode(name);
     para.appendChild(node);
-    elementName.appendChild(para);
+    userName.appendChild(para);
     
     //Get user profile picture
     var imageFile = user.get("picture");
@@ -134,126 +134,133 @@ function loadUserData() {
     query.equalTo("userId", user.get("username"));
     query.find({
        success: function(userReviews) {
-                       // number of reviews
-            var reviewTable = document.createElement("TABLE");
-                reviewTable.style.width = '800px';
-                reviewTable.style.borderCollapse = "collapse";
-            var row = document.createElement("TR");
-            row.style.height = '50px';
-            var boldCompany = document.createElement("b");
-            var boldRatings = document.createElement("b");
-            var boldComment = document.createElement("b");
-            var boldHelp = document.createElement("b");
-            var cCell = document.createElement("TD");
-            var rCell = document.createElement("TD");
-            var comCell = document.createElement("TD");
-            var helpCell = document.createElement("TD");
+           // number of reviews
+           var reviewTable = document.createElement("TABLE");
+           reviewTable.style.width = '1000px';
            
-            boldCompany.appendChild(document.createTextNode("Company"));
-            boldRatings.appendChild(document.createTextNode("Ratings"));
-            boldComment.appendChild(document.createTextNode("Comment"));
-            boldHelp.appendChild(document.createTextNode("Helpful"));
+           reviewTable.style.borderCollapse = "collapse";
+           var row = document.createElement("TR");
+           row.style.height = '80px';
            
-            cCell.appendChild(boldCompany);
-            rCell.appendChild(boldRatings);
-            comCell.appendChild(boldComment);
-            helpCell.appendChild(boldHelp);
+           var boldCompany = document.createElement("h4");
+           var boldRatings = document.createElement("h4");
+           var boldComment = document.createElement("h4");
+           var boldHelp = document.createElement("h4");
+           var cCell = document.createElement("TD");
+           var rCell = document.createElement("TD");
+           var comCell = document.createElement("TD");
+           var helpCell = document.createElement("TD");
            
-            row.appendChild(cCell);
-            row.appendChild(rCell);
-            row.appendChild(comCell);
-            row.appendChild(helpCell);
+           boldCompany.appendChild(document.createTextNode("Company"));
+           boldRatings.appendChild(document.createTextNode("Ratings"));
+           boldComment.appendChild(document.createTextNode("Comment"));
+           boldHelp.appendChild(document.createTextNode("Helpful"));
            
-            reviewTable.appendChild(row);
+           cCell.appendChild(boldCompany);
+           cCell.style.width = '150px';
+           rCell.appendChild(boldRatings);
+           rCell.style.width = '300px';
+           comCell.appendChild(boldComment);
+           helpCell.appendChild(boldHelp);
+           helpCell.style.width = '250px'   
+           helpCell.style.paddingLeft = '40px';
+           
+           row.appendChild(cCell);
+           row.appendChild(rCell);
+           row.appendChild(comCell);
+           row.appendChild(helpCell);
+           
+           reviewTable.appendChild(row);
             
             var elementNumReview = document.getElementById("numReviews");
             var numReviews = userReviews.length;
-            para = document.createElement("p");
+           
+           //number of reviews user has submitted
+            numReviewElem = document.createElement("p");
             if(numReviews == 1) {
                 node = document.createTextNode(numReviews + " Review")
             }
             else {
                 node = document.createTextNode(numReviews + " Reviews");
             }
-            para.appendChild(node);
-            elementNumReview.appendChild(para);
+            numReviewElem.appendChild(node);
+            elementNumReview.appendChild(numReviewElem);
                       
+           
            for(var i = 0; i < userReviews.length; i++) {
-                var reviewDiv = document.createElement("div");
-                reviewDiv.className = 'row';
+               
                 var firstRow = document.createElement("TR");
-                firstRow.style.height = '80px';
-                        firstRow.style.textAlign = 'left';
-                        firstRow.style.verticalAlign = 'top';
-                        firstRow.style.padding = 0;
+                firstRow.style.height = '100px';
+                firstRow.style.textAlign = 'left';
+                firstRow.style.verticalAlign = 'top';
+               
                 var companyCell = document.createElement("TD");
                 var ratingCell = document.createElement("TD");
                 var commentCell = document.createElement("TD");
                 var helpfulCell = document.createElement("TD");
                
-                var companyPara = document.createElement("h2");
-                var companyName = userReviews[i].get("companyId");
-                companyPara.onclick = (function() {
-                        var company = companyName;
-                        return function() {
-                            document.cookie = "companySearch=" + company;
-                            window.location.href = "companyProfile.html";
-                        }
-                    })();
-                var companyNode = document.createTextNode(companyName);
-                companyPara.appendChild(companyNode);
-                //reviewDiv.appendChild(companyPara);
-                //elementReviews.appendChild(companyDiv);
+                
+                var companyName = document.createTextNode(userReviews[i].get("companyId"));
+//                companyPara.onclick = (function() {
+//                        var company = companyName;
+//                        return function() {
+//                            document.cookie = "companySearch=" + company;
+//                            window.location.href = "companyProfile.html";
+//                        }
+//                    })();
                
-                var shipPara = document.createElement("h4");
-                var shipNode = document.createTextNode("Shipping: " + userReviews[i].get("shippingRating"));
-                shipPara.appendChild(shipNode);
-                //elementReviews.appendChild(shipPara);
-                //reviewDiv.appendChild(shipPara);
                
-                var servPara = document.createElement("h4");
-                var servNode = document.createTextNode("Service: " + userReviews[i].get("serviceRating"));
-                servPara.appendChild(servNode);
-                //elementReviews.appendChild(servPara);
-                //reviewDiv.appendChild(servPara);
+                //obtain ratings
+                var ratingsTable = document.createElement("TABLE");
+                var shippingRow = document.createElement("TR");
+                var serviceRow = document.createElement("TR");
+               var qualityRow = document.createElement("TR");
                
-                var qualPara = document.createElement("h4");
-                var qualNode = document.createTextNode("Quality: " + userReviews[i].get("qualityRating"));
-                qualPara.appendChild(qualNode);
-                //elementReviews.appendChild(qualPara);
-               //reviewDiv.appendChild(qualPara);
+               var shippingTextCell = document.createElement("TD");
+                var shippingText = document.createTextNode("Shipping: ");
+                var shippingStarsCell = document.createElement("TD");
+                var shippingStars = createStars("Shipping", userReviews[i].get("shippingRating"));
+               shippingStarsCell.appendChild(shippingStars);
+               shippingTextCell.appendChild(shippingText);
+               shippingRow.appendChild(shippingTextCell);
+               shippingRow.appendChild(shippingStarsCell);
+               ratingsTable.appendChild(shippingRow);
+
+               var serviceTextCell = document.createElement("TD");
+               var serviceText = document.createTextNode("Service: ");
+                var serviceStarsCell = document.createElement("TD");
+                var serviceStars = createStars("Service", userReviews[i].get("serviceRating"));
+                serviceStarsCell.appendChild(serviceStars);
+                serviceTextCell.appendChild(serviceText);
+                serviceRow.appendChild(serviceTextCell);
+                serviceRow.appendChild(serviceStarsCell);
+                ratingsTable.appendChild(serviceRow);
+
+                var qualityTextCell = document.createElement("TD");
+                var qualityText = document.createTextNode("Quality: ");
+                var qualityStarsCell = document.createElement("TD");
+                var qualityStars = createStars("Quality", userReviews[i].get("qualityRating"));
+                qualityStarsCell.appendChild(qualityStars);
+                qualityTextCell.appendChild(qualityText);
+                qualityRow.appendChild(qualityTextCell);
+                qualityRow.appendChild(qualityStarsCell);
+                ratingsTable.appendChild(qualityRow);
+
                
-               var commentPara = document.createElement("p");
-               var commentNode = document.createTextNode(userReviews[i].get("comment"));
-               commentPara.appendChild(commentNode);
-               //elementReviews.appendChild(commentPara);
-               //reviewDiv.appendChild(commentPara);
+               var userCompanyComment = document.createTextNode(userReviews[i].get("comment"));
                
-               var foundHelpfulPara = document.createElement("p");
-               var foundHelpfulNode = document.createTextNode(userReviews[i].get("score") + " user\(s\) found this review helpful");
-               foundHelpfulPara.appendChild(foundHelpfulNode);
-               //reviewDiv.appendChild(foundHelpfulPara);
-               
-               var lineBreak = document.createElement("hr");
-               //reviewDiv.appendChild(lineBreak);
-               //elementReviews.appendChild(reviewDiv);
-               
-               companyCell.appendChild(companyNode);
-               
-               ratingCell.appendChild(shipNode);
-               ratingCell.appendChild(document.createElement("br"));
-               ratingCell.appendChild(servNode);
-               ratingCell.appendChild(document.createElement("br"));
-               ratingCell.appendChild(qualNode);
-               
-               commentCell.appendChild(commentNode);
-               
-               helpfulCell.appendChild(foundHelpfulNode);
+               var foundHelpful = document.createTextNode(userReviews[i].get("score") + " user\(s\) found this review helpful");
+                              
+               companyCell.appendChild(companyName);
+               ratingCell.appendChild(ratingsTable);
+               commentCell.appendChild(userCompanyComment);
+               helpfulCell.appendChild(foundHelpful);
                
                firstRow.appendChild(companyCell);
                firstRow.appendChild(ratingCell);
                firstRow.appendChild(commentCell);
                firstRow.appendChild(helpfulCell);
+               helpfulCell.style.paddingLeft = '40px';
                
                reviewTable.appendChild(firstRow);
            }
