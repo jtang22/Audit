@@ -260,6 +260,8 @@ function loadUserData() {
                firstRow.appendChild(ratingCell);
                firstRow.appendChild(commentCell);
                firstRow.appendChild(helpfulCell);
+              firstRow.style.height = '200px'
+
                helpfulCell.style.paddingLeft = '40px';
                
                reviewTable.appendChild(firstRow);
