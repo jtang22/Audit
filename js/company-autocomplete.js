@@ -23,8 +23,7 @@ $(function(){
             query.equalTo("Name", suggestion.value);
             query.find({
                 success: function(results) {
-                    results[0].set("Searched", true);
-                    results[0].save();
+                    document.cookie = "companySearch=" + suggestion.value;
                     window.location.href = "companyProfile.html";
                 },
                 error: function(error) {

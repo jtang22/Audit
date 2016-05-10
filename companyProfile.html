@@ -39,7 +39,9 @@
 
     <!-- Custom styles for this template -->
     <link href="css/jumbotron.css" rel="stylesheet">
-    <link href="css/rating.css" rel="stylesheet">      
+    <link href="css/rating.css" rel="stylesheet">     
+    <link href="css/displayRating.css" rel="stylesheet">      
+
     <link href="css/column.css" rel="stylesheet">      
 
     <script src="js/userLogIn.js"></script>
@@ -90,60 +92,92 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-          <br>
-<!--          <center><h1>User Profile</h1></center>-->
-          <div class="media">
-              <div class="media-left media-middle">
-                <a href="#">
-                  <img class="media-object" src="https://u.o0bc.com/avatars/no-user-image.gif" style="width:200px;height:200px;">
-                </a>
-              </div>
-              <div class="media-body">
-                <div class="column">
-                    <h2 class="media-heading" id="companyName"></h2>
-                    <p id="companyWebsite"></p>
-
-                    <span class="rate">
-                      <input id="rating5" type="radio" name="rating" value="5">
-                      <label for="rating5">5</label>
-                      <input id="rating4" type="radio" name="rating" value="4">
-                      <label for="rating4">4</label>
-                      <input id="rating3" type="radio" name="rating" value="3">
-                      <label for="rating3">3</label>
-                      <input id="rating2" type="radio" name="rating" value="2">
-                      <label for="rating2">2</label>
-                      <input id="rating1" type="radio" name="rating" value="1">
-                      <label for="rating1">1</label>
-                    </span>
-                </div>
-                
-                <div class="column">
-                    <p id="companyService"></p>
-                    <p id="companyShipping"></p>
-                    <p id="companyQuality"></p>
-                    <br>
-                    <button type="button" class="btn btn-default" onclick="writeReview()">Write A Review</button>
-
-                  </div>
-              </div>
-            </div>
-          <br>
-       
-      </div>
+          <div class="col-md-3">
+            <img class="media-object" id = "companyImage" style="width:200px;height:200px;">
+          </div>
+          <div class="col-md-3">
+            <h2 id="companyName"></h2>
+            <p id="companyWebsite"></p>
+            <span class="displayRate">
+              <input id="avgRating5" type="radio" name="avgRating" value="5">
+              <label for="avgRating5">5</label>
+              <input id="avgRating4" type="radio" name="avgRating" value="4">
+              <label for="avgRating4">4</label>
+              <input id="avgRating3" type="radio" name="avgRating" value="3">
+              <label for="avgRating3">3</label>
+              <input id="avgRating2" type="radio" name="avgRating" value="2">
+              <label for="avgRating2">2</label>
+              <input id="avgRating1" type="radio" name="avgRating" value="1">
+              <label for="avgRating1">1</label>
+            </span>
+          </div>
+          
+          <div class="col-md-3">
+              <p>Customer Service: </p>
+              <p>Shipping: </p>
+              <p>Quality: </p>
+              <br>
+              <button type="button" id="writeReview" class="btn btn-default" onclick="writeReview()" style="display:none">Write A Review</button>
+          
+          </div>
+          <div class="col-md-3">
+            
+            <span class="displayRate">
+              <input id="serviceRating5" type="radio" name="serviceRating" value="5">
+              <label for="serviceRating5">5</label>
+              <input id="serviceRating4" type="radio" name="serviceRating" value="4">
+              <label for="serviceRating4">4</label>
+              <input id="serviceRating3" type="radio" name="serviceRating" value="3">
+              <label for="serviceRating3">3</label>
+              <input id="serviceRating2" type="radio" name="serviceRating" value="2">
+              <label for="serviceRating2">2</label>
+              <input id="serviceRating1" type="radio" name="serviceRating" value="1">
+              <label for="serviceRating1">1</label>
+            </span>
+              
+            <span class="displayRate">
+              <input id="shippingRating5" type="radio" name="displayRating" value="5">
+              <label for="shippingRating5">5</label>
+              <input id="shippingRating4" type="radio" name="displayRating" value="4">
+              <label for="shippingRating4">4</label>
+              <input id="shippingRating3" type="radio" name="displayRating" value="3">
+              <label for="shippingRating3">3</label>
+              <input id="shippingRating2" type="radio" name="displayRating" value="2">
+              <label for="shippingRating2">2</label>
+              <input id="shippingRating1" type="radio" name="displayRating" value="1">
+              <label for="shippingRating1">1</label>
+            </span>
+          
+            <span class="displayRate">
+              <input id="qualityRating5" type="radio" name="qualityRating" value="5">
+              <label for="qualityRating5">5</label>
+              <input id="qualityRating4" type="radio" name="qualityRating" value="4">
+              <label for="qualityRating4">4</label>
+              <input id="qualityRating3" type="radio" name="qualityRating" value="3">
+              <label for="qualityRating3">3</label>
+              <input id="qualityRating2" type="radio" name="qualityRating" value="2">
+              <label for="qualityRating2">2</label>
+              <input id="qualityRating1" type="radio" name="qualityRating" value="1">
+              <label for="qualityRating1">1</label>
+            </span>
+          
+          </div>
     </div>
+      </div>
       
-      
-    <div class="container">
-      <div id="displayReview"></div>
+    <div class="container" id="displayReview">
+<!--        <table id="reviewTable"></table>-->
           <!--h2 id="reviewHeading"></h2>
           <p id="reviewDescription"></p-->
 <!--          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>-->
 <!--      </div>-->
 
+<!--
       <hr>
       <footer>
         <p>&copy; 2016 Audit, A Senior Project.</p>
       </footer>
+-->
     </div> <!-- /container -->
 
 

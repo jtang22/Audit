@@ -39,7 +39,8 @@
 
     <!-- Custom styles for this template -->
     <link href="css/jumbotron.css" rel="stylesheet">
-      
+      <link href="css/displayRating.css" rel="stylesheet">      
+
     <script src="js/userLogIn.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -82,38 +83,30 @@
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
-        
-
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
+      
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
       <div class="container">
-          <br>
-<!--          <center><h1>User Profile</h1></center>-->
-          <div class="media">
-              <div class="media-left media-middle">
-                <a href="#">
-                  <img class="media-object" id="profilepic" src="https://u.o0bc.com/avatars/no-user-image.gif" style="width:200px;height:200px;">
-                </a>
-              </div>
-              <div class="media-body">
-                <h2 class="media-heading" id="userName"></h2>
-                <p id="numReviews"></p>
-<!--            button for image-->
-                <!--form action="" name=uploadpic>
-                  <input type="file" id="picture" name="pic" accept="image/*">
-                  <input type="submit" onsubmit="" ="setPicture()"-->
-                 <form method="post" action="filesave.cfm" enctype="multipart/form-data" name="form1">
+          <div class="col-md-3">
+              <img class="media-object" id="profilepic" style="width:200px;height:200px;">
+              <form method="post" action="filesave.cfm" enctype="multipart/form-data" name="form1">
 					<input type="file" id="pic" name="filesent" accept="image/*">
 					<input type="button" value="Upload" name="Upload" onClick="setPicture()">
 					<input type="hidden" name="height" value="0">
 					<input type="hidden" name="width" value="0">
                 </form>
-              </div>
-            </div>
-          <br>
-       
+          </div>
+          <div class="col-md-3">
+              <h2 class="media-heading" id="userName"></h2>
+              <p id="userEmail"></p>
+              <p id="numReviews"></p>
+<!--            button for image-->
+                <!--form action="" name=uploadpic>
+                  <input type="file" id="picture" name="pic" accept="image/*">
+                  <input type="submit" onsubmit="" ="setPicture()"-->
+          </div>
+        </div>
       </div>
-    </div>
       
       
     <div class="container">
@@ -125,7 +118,7 @@
 
       <hr>
       <footer>
-        <p>&copy; 2016 Audit, A Senior Project.</p>
+        <p>2016 Audit, A Senior Project.</p>
       </footer>
     </div> <!-- /container -->
 
