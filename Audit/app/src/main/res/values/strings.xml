@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Audit</string>
+    <string name="action_settings">Settings</string>
+    <string name="welcome">Welcome to Audit!</string>
+    <string name="signin">Sign In</string>
+    <string name="signup">Sign Up</string>
+    <string name="guest">Continue as Guest</string>
+    <string name="title_activity_signin">Sign in</string>
+
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="cancel">Cancel</string>
+    <string name="forgot">Forgot Username or Password?</string>
+
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="signupForAudit">Sign Up for an Audit Account</string>
+    <string name="enterEmail">Email Address</string>
+    <string name="enterPassword">Password</string>
+    <string name="reenterPassword">Re-enter Password</string>
+    <string name="signupUsername">Username</string>
+    <string name="submit">Submit</string>
+
+    <string name="menu">Menu</string>
+    <string name="viewProfile">View Profile</string>
+    <string name="aboutUs">About Us</string>
+    <string name="contactUs">Contact Us</string>
+    <string name="help">Help</string>
+    <string name="logout">Logout</string>
+
+    <string name="search_hint">Search</string>
+    <string name="app_label">Audit</string>
+
+    <string name="customer_service">Customer Service: </string>
+    <string name="shipping">Shipping: </string>
+    <string name="quality">Quality: </string>
+    <string name="reviewer">Reviewer: </string>
+</resources>
