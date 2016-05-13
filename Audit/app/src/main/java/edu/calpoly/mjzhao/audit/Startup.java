@@ -1,6 +1,10 @@
 package edu.calpoly.mjzhao.audit;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,11 +14,16 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseUser;
+import com.plattysoft.leonids.ParticleSystem;
+import com.squareup.picasso.Picasso;
 
 public class Startup extends AppCompatActivity {
 
@@ -64,5 +73,25 @@ public class Startup extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button koala = (Button) findViewById(R.id.koala_mode);
+        koala.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                koalaModeActivate();
+            }
+        });
+    }
+
+    private void koalaModeActivate () {
+        new ParticleSystem(this, 80, R.drawable.koala, 10000)
+                .setSpeedModuleAndAngleRange(0f, 0.3f, 45, 0)
+                .setRotationSpeed(256)
+                .setAcceleration(0.00005f, 90)
+                .emit(findViewById(R.id.emitter_top_left), 8);
+        new ParticleSystem(this, 80, R.drawable.koala, 10000)
+                .setSpeedModuleAndAngleRange(0f, 0.3f, 135, 180)
+                .setRotationSpeed(256)
+                .setAcceleration(0.00005f, 90)
+                .emit(findViewById(R.id.emitter_top_right), 8);
     }
 }

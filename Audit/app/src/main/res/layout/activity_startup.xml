@@ -11,6 +11,32 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.calpoly.mjzhao.audit.Startup">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Space
+            android:id="@+id/emitter_top_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </Space>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Space
+            android:id="@+id/emitter_top_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end">
+        </Space>
+    </LinearLayout>
+
+
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,5 +63,18 @@
         android:layout_height="wrap_content"
         android:text="@string/guest"
         android:id="@+id/guest" />
+
+    <Button
+        android:id="@+id/koala_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/koala"/>
+
+
+    <ImageView
+        android:id="@+id/koala_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
 
 </LinearLayout>
