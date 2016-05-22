@@ -37,13 +37,37 @@ public class ReviewView  extends LinearLayout {
         setReview(review);
     }
 
+    public ReviewView (Context context, ParseObject review, String userPic) {
+        super(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.review_view, this, true);
+
+        m_image = (ImageView) findViewById(R.id.reviewerImage);
+        m_reviewer = (TextView) findViewById(R.id.reviewerName);
+        m_service = (RatingBar) findViewById(R.id.serviceRating);
+        m_shipping = (RatingBar) findViewById(R.id.shippingRating);
+        m_quality = (RatingBar) findViewById(R.id.qualityRating);
+        m_comment = (TextView) findViewById(R.id.comment);
+
+        setReview(review, userPic);
+    }
+
     public void setReview (ParseObject review) {
         m_reviewer.setText(review.getString("userId"));
         m_service.setRating(review.getInt("serviceRating"));
         m_shipping.setRating(review.getInt("shippingRating"));
         m_quality.setRating(review.getInt("qualityRating"));
         m_comment.setText(review.getString("comment"));
-        Picasso.with(getContext()).load(R.drawable.placeholder_user).into(m_image);
+        requestLayout();
+    }
+
+    public void setReview (ParseObject review, String userPic) {
+        m_reviewer.setText(review.getString("userId"));
+        m_service.setRating(review.getInt("serviceRating"));
+        m_shipping.setRating(review.getInt("shippingRating"));
+        m_quality.setRating(review.getInt("qualityRating"));
+        m_comment.setText(review.getString("comment"));
+        Picasso.with(getContext()).load(userPic).into(m_image);
         requestLayout();
     }
 }

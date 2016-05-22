@@ -11,6 +11,4 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.calpoly.mjzhao.audit.Startup">
 
-
-
 </LinearLayout>

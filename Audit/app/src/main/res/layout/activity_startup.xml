@@ -34,9 +34,6 @@
         </Space>
     </LinearLayout>
 
-
-
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,19 +44,19 @@
         android:text="@string/welcome" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:text="@string/signin"
         android:id="@+id/signin" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:text="@string/signup"
         android:id="@+id/signup" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:text="@string/guest"
         android:id="@+id/guest" />
@@ -69,12 +66,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/koala"/>
-
-
-    <ImageView
-        android:id="@+id/koala_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"/>
 
 </LinearLayout>

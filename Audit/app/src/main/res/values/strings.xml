@@ -31,7 +31,7 @@
     <string name="search_hint">Search</string>
     <string name="app_label">Audit</string>
 
-    <string name="customer_service">Customer Service: </string>
+    <string name="customer_service">Service: </string>
     <string name="shipping">Shipping: </string>
     <string name="quality">Quality: </string>
     <string name="reviewer">Reviewer: </string>

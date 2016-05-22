@@ -83,15 +83,16 @@ public class Startup extends AppCompatActivity {
     }
 
     private void koalaModeActivate () {
+
         new ParticleSystem(this, 80, R.drawable.koala, 10000)
                 .setSpeedModuleAndAngleRange(0f, 0.3f, 45, 0)
                 .setRotationSpeed(256)
                 .setAcceleration(0.00005f, 90)
-                .emit(findViewById(R.id.emitter_top_left), 8);
+                .emitWithGravity(findViewById(R.id.emitter_top_left), 100, 8);
         new ParticleSystem(this, 80, R.drawable.koala, 10000)
                 .setSpeedModuleAndAngleRange(0f, 0.3f, 135, 180)
                 .setRotationSpeed(256)
                 .setAcceleration(0.00005f, 90)
-                .emit(findViewById(R.id.emitter_top_right), 8);
+                .emitWithGravity(findViewById(R.id.emitter_top_right), 100, 8);
     }
 }
