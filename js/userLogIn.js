@@ -327,7 +327,7 @@ function loadCompanyData() {
            success: function(userReviews) {
                //sets up a table
                reviewTable = document.createElement("TABLE");
-               reviewTable.style.width = '1500px';
+               reviewTable.style.width = '1150px';
                reviewTable.id = "reviewTable";
                var shipping = 0;
                var quality = 0;
@@ -400,7 +400,7 @@ function loadCompanyData() {
                             var shippingRow = document.createElement("TR");
                             var serviceRow = document.createElement("TR");
                             var qualityRow = document.createElement("TR");
-
+                            
                             var shippingTextCell = document.createElement("TD");
                             var shippingText = document.createTextNode("Shipping: ");
                             var shippingStarsCell = document.createElement("TD");
@@ -433,7 +433,7 @@ function loadCompanyData() {
 
                             //obtain comment
                             var commentNode = document.createTextNode(review.get("comment"));
-
+                            
                             //creating the buttons
                             flagButton = document.createElement("button");
                             flagButton.innerHTML = "Flag";
@@ -479,12 +479,12 @@ function loadCompanyData() {
                             userName.appendChild(userNode);
                             userCell.appendChild(userName);
                             userCell.appendChild(userImg);
-                            userCell.style.width = '300px';
+                            userCell.style.width = '150px';
                             //userCell.appendChild(document.createElement("img"));
                             
                             //add ratings to the ratingsCell
                             ratingsCell.appendChild(ratingsTable);
-                            ratingsCell.style.width = '300px';
+                            ratingsCell.style.width = '180px';
 
                             //add comment and buttons to the commentCell
                             commentCell.appendChild(commentNode);
@@ -494,6 +494,7 @@ function loadCompanyData() {
                             commentCell.appendChild(document.createElement("br"));
                             commentCell.appendChild(document.createElement("br"));
                             commentCell.appendChild(document.createElement("br"));
+                            commentCell.style.width = '350px'
 
                             commentCell.appendChild(helpfulPara);
                             
