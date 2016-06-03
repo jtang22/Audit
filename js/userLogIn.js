@@ -333,6 +333,7 @@ function loadCompanyData() {
                var quality = 0;
                var service = 0;
                var ticker = 0;
+               var displayButton = true;
                userReviews.forEach(function(review) {
                     //Get user profile picture
                     var imgQuery = new Parse.Query(Parse.User);
@@ -359,10 +360,11 @@ function loadCompanyData() {
                         var user = Parse.User.current();
                        //checks if user has written a review.
                         if(user) {          
-                            console.log(user.get("username") + " " + review.get("userId"));
-                            if(!user.get("username").localeCompare(review.get("userId"))) {
+                            console.log("button check: " + user.get("username") + " " + review.get("userId"));
+                            if(user.get("username") == review.get("userId")) {
                                 console.log("disabling button");
-                                document.getElementById("writeReview").style.display = '';
+                                document.getElementById("writeReview").style.display = 'none';
+                                //displayButton = false;
                             }
                         }
                         //for company overall ratings
@@ -529,7 +531,11 @@ function loadCompanyData() {
                
                var elementReviews = document.getElementById("displayReview");
                elementReviews.appendChild(reviewTable);
-               
+               console.log("displayButton: " + displayButton);
+
+//               if(displayButton == true) {
+//                document.getElementById("writeReview").style.display = 'none';
+//               }
                
            }
         });
