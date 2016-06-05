@@ -333,6 +333,7 @@ function loadCompanyData() {
                var quality = 0;
                var service = 0;
                var ticker = 0;
+               var totalReviews = userReviews.length;
                var displayButton = true;
                userReviews.forEach(function(review) {
                     //Get user profile picture
@@ -373,7 +374,10 @@ function loadCompanyData() {
                         quality += review.get("qualityRating");
 
                         //if review is not flag, add to page
-                        if(review.get("flagged") != true) {
+                        if(review.get("flagged") == true) {
+                            totalReviews--;
+                        }
+                        else{
                             //sets up a new row
                             var firstRow = document.createElement("TR");
                             firstRow.style.verticalAlign = 'top';
@@ -444,6 +448,7 @@ function loadCompanyData() {
                                     var thisReview = review;
                                     thisReview.set("flagged", true);
                                     thisReview.save();
+                                    window.location.reload();
                                 }
                             })();
 
@@ -456,6 +461,7 @@ function loadCompanyData() {
                                     curScore++;
                                     thisReview.set("score", curScore);
                                     thisReview.save();
+                                    window.location.reload();
                                 }
                             })();
 
@@ -469,6 +475,7 @@ function loadCompanyData() {
                                         curScore--;
                                         thisReview.set("score", curScore);
                                         thisReview.save();
+                                        window.location.reload();
                                     }
                                 }
                             })();
@@ -514,10 +521,13 @@ function loadCompanyData() {
                             secondRow.appendChild(buttonsCell);
                             reviewTable.appendChild(secondRow);
                             ticker++;
-                            if(ticker == userReviews.length) {
-                                service /= userReviews.length;
-                                shipping /= userReviews.length;
-                                quality /= userReviews.length;
+                            console.log("ticker: " + ticker);
+                            console.log("userReviews.length: " + userReviews.length);
+                            console.log("totalReviews: " + totalReviews);
+                            if(ticker == totalReviews) {
+                                service /= totalReviews;
+                                shipping /= totalReviews;
+                                quality /= totalReviews;
 
                                 var totalRating = (service + shipping + quality) / 3;
                                 setStars("avgRating", totalRating);
@@ -532,11 +542,6 @@ function loadCompanyData() {
                var elementReviews = document.getElementById("displayReview");
                elementReviews.appendChild(reviewTable);
                console.log("displayButton: " + displayButton);
-
-//               if(displayButton == true) {
-//                document.getElementById("writeReview").style.display = 'none';
-//               }
-               
            }
         });
     });
