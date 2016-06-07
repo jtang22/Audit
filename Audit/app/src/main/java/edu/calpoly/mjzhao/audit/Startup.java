@@ -18,6 +18,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
@@ -39,14 +40,10 @@ public class Startup extends AppCompatActivity {
 
         setContentView(R.layout.activity_startup);
         initButtons();
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = new MenuInflater(this);
-        menuInflater.inflate(R.menu.mainmenu, menu);
-        m_vwMenu = menu;
-        return true;
+        if (ParseUser.getCurrentUser() != null) {
+            ParseUser.getCurrentUser().logOutInBackground();
+        }
     }
 
     void initButtons () {
@@ -75,6 +72,7 @@ public class Startup extends AppCompatActivity {
         });
 
         Button koala = (Button) findViewById(R.id.koala_mode);
+        koala.setVisibility(View.GONE);
         koala.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 koalaModeActivate();

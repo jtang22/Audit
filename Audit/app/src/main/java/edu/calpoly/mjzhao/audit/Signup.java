@@ -1,7 +1,11 @@
 package edu.calpoly.mjzhao.audit;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ParseException;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,9 +15,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.Parse;
 import com.parse.SignUpCallback;
+
+import java.io.ByteArrayOutputStream;
 
 public class Signup extends AppCompatActivity {
 
@@ -36,14 +43,6 @@ public class Signup extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         getLabels();
         initButtons();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = new MenuInflater(this);
-        menuInflater.inflate(R.menu.mainmenu, menu);
-        m_vwMenu = menu;
-        return true;
     }
 
     void getLabels () {
@@ -132,6 +131,17 @@ public class Signup extends AppCompatActivity {
                 } else {
                     // Start an intent for the dispatch activity
                     Toast.makeText(Signup.this, "New account created!", Toast.LENGTH_LONG).show();
+
+                    Drawable placeholder = ResourcesCompat.getDrawable(getResources(), R.drawable.placeholder_user, null);
+                    Bitmap bmp = ((BitmapDrawable)placeholder).getBitmap();
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    byte[] bitmapdata = stream.toByteArray();
+                    ParseFile upload = new ParseFile(bitmapdata, "jpeg");
+
+                    ParseUser.getCurrentUser().put("picture", upload);
+                    ParseUser.getCurrentUser().saveInBackground();
+
                     Intent intent = new Intent(Signup.this, HomeScreen.class);
                     startActivity(intent);
                 }

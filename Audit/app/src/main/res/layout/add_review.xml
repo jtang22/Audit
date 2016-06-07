@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:paddingTop="24dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:id="@+id/review_for"/>
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_marginStart="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/customer_service"
+                    android:paddingTop="5dp"
+                    android:textSize="24sp" />
+
+                <RatingBar
+                    android:id="@+id/serviceRating"
+                    android:progressTint="@color/goldenStar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:stepSize="1"
+                    android:numStars="5"
+                    android:scaleX="0.75"
+                    android:scaleY="0.75"
+                    android:transformPivotX="0dp"
+                    android:transformPivotY="0dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_marginStart="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shipping"
+                    android:paddingTop="5dp"
+                    android:textSize="24sp"/>
+
+                <RatingBar
+                    android:id="@+id/shippingRating"
+                    android:progressTint="@color/goldenStar"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:stepSize="1"
+                    android:scaleX="0.75"
+                    android:scaleY="0.75"
+                    android:transformPivotX="0dp"
+                    android:transformPivotY="0dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_marginStart="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quality"
+                    android:paddingTop="5dp"
+                    android:textSize="24sp"/>
+
+                <RatingBar
+                    android:id="@+id/qualityRating"
+                    android:progressTint="@color/goldenStar"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:stepSize="1"
+                    android:numStars="5"
+                    android:scaleX="0.75"
+                    android:scaleY="0.75"
+                    android:transformPivotX="0dp"
+                    android:transformPivotY="0dp" />
+            </TableRow>
+
+        </TableLayout>
+
+        <EditText
+            android:id="@+id/add_review_comment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:lines="5"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="30"
+            android:padding="5dp"
+            android:background="@drawable/staff_shaperect"
+            android:fontFamily="sans-serif"
+            android:gravity="left"
+            android:inputType="textMultiLine"
+            android:windowSoftInputMode="adjustResize"
+            android:isScrollContainer="true"/>
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="@string/submit"/>
+    </LinearLayout>
+
+</ScrollView>

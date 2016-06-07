@@ -6,10 +6,4 @@
         android:icon="@drawable/ic_search"
         app:showAsAction="always"
         app:actionViewClass="android.widget.SearchView" />
-    <item android:id="@+id/viewProfile"
-        android:title="@string/viewProfile"
-        android:showAsAction="collapseActionView"/>
-    <item android:id="@+id/logout"
-        android:title="@string/logout"
-        android:showAsAction="collapseActionView"/>
 </menu>

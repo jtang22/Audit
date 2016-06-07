@@ -1,11 +1,14 @@
 package edu.calpoly.mjzhao.audit;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ParseException;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -38,14 +41,6 @@ Signin extends AppCompatActivity {
         initButtons();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = new MenuInflater(this);
-        menuInflater.inflate(R.menu.mainmenu, menu);
-        m_vwMenu = menu;
-        return true;
-    }
-
     void initButtons() {
         m_CancelButton = (Button) findViewById(R.id.cancel);
         m_CancelButton.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +52,11 @@ Signin extends AppCompatActivity {
         m_SigninButton = (Button) findViewById(R.id.signin);
         m_SigninButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+
+                if (ParseUser.getCurrentUser() != null) {
+                    ParseUser.getCurrentUser().logOutInBackground();
+                }
+
                 ParseUser.logInInBackground(m_usernameField.getText().toString(),
                         m_passwordField.getText().toString(), new LogInCallback() {
                     @Override
@@ -65,8 +65,10 @@ Signin extends AppCompatActivity {
                             Toast.makeText(Signin.this, "Login successful!", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(Signin.this, HomeScreen.class);
                             startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(Signin.this, "Login failed!", Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
                         }
                     }
                 });
@@ -104,5 +106,24 @@ Signin extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Signin.this);
+
+        LayoutInflater inflater = Signin.this.getLayoutInflater();
+
+        builder.setView(inflater.inflate(R.layout.enter_email, null))
+                .setMessage(getResources().getString(R.string.enter_email))
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton(R.string.send_reset, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                }).show();
     }
 }

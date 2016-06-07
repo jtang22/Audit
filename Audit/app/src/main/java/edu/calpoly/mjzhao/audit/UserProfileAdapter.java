@@ -10,15 +10,15 @@ import com.parse.ParseObject;
 import java.util.List;
 
 /**
- * Created by Myron on 5/10/2016.
+ * Created by Myron on 6/3/2016.
  */
-public class ReviewListAdapter extends BaseAdapter{
+public class UserProfileAdapter extends BaseAdapter {
 
     private Context m_context;
     private List<ParseObject> m_reviewList;
     private List<String> m_userPicList;
 
-    public ReviewListAdapter(Context context, List<ParseObject> reviewList, List<String> userPicList) {
+    public UserProfileAdapter(Context context, List<ParseObject> reviewList, List<String> userPicList) {
         m_context = context;
         m_reviewList = reviewList;
         m_userPicList = userPicList;
@@ -43,17 +43,18 @@ public class ReviewListAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             if (m_userPicList.size() != m_reviewList.size()) {
-                convertView = new ReviewView(m_context, m_reviewList.get(position));
+                convertView = new UserProfileView(m_context, m_reviewList.get(position));
             } else {
-                convertView = new ReviewView(m_context, m_reviewList.get(position), m_userPicList.get(position));
+                convertView = new UserProfileView(m_context, m_reviewList.get(position), m_userPicList.get(position));
             }
         } else {
             if (m_userPicList.size() != m_reviewList.size()) {
-                ((ReviewView) convertView).setReview(m_reviewList.get(position));
+                ((UserProfileView)convertView).setReview(m_reviewList.get(position));
             } else {
-                ((ReviewView) convertView).setReview(m_reviewList.get(position), m_userPicList.get(position));
+                ((UserProfileView)convertView).setReview(m_reviewList.get(position), m_userPicList.get(position));
             }
         }
+
         return convertView;
     }
 }

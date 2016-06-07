@@ -2,31 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/company_lin_layout">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
 
         <LinearLayout
-            android:layout_width="120dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
             <TextView
-                android:id="@+id/reviewerName"
-                android:layout_marginTop="5dp"
+                android:id="@+id/company_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-            <ImageButton
-                android:id="@+id/reviewerImage"
+            <ImageView
+                android:id="@+id/company_image"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="15dp"
-                android:layout_width="80dp"
-                android:layout_height="80dp" />
+                android:layout_marginBottom="5dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
+            <TextView
+                android:id="@+id/company_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"/>
 
         </LinearLayout>
 
@@ -35,9 +44,46 @@
             android:layout_height="wrap_content">
 
             <TableRow
+                android:layout_marginTop="5dp">
+
+                <Button
+                    android:layout_span="2"
+                    android:id="@+id/add_review"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/addReview"
+                    android:textSize="12sp"
+                    style="?android:attr/buttonStyleSmall"/>
+
+            </TableRow>
+
+            <TableRow
                 android:layout_marginStart="25dp"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/overall"/>
+
+                <RatingBar
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:id="@+id/overallRating"
+                    android:progressTint="@color/goldenStar"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:clickable="false"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_marginStart="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -52,7 +98,8 @@
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:numStars="5"/>
+                    android:numStars="5"
+                    android:clickable="false"/>
             </TableRow>
 
             <TableRow
@@ -73,7 +120,8 @@
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:numStars="5"/>
+                    android:numStars="5"
+                    android:clickable="false"/>
             </TableRow>
 
             <TableRow
@@ -94,21 +142,17 @@
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:numStars="5"/>
+                    android:numStars="5"
+                    android:clickable="false"/>
             </TableRow>
 
         </TableLayout>
-
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/comment"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_height="1dp"
+        android:background="@android:color/black"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>

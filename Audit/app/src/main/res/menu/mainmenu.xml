@@ -1,25 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/mainmenu"
-        android:title="@string/menu"
-        android:showAsAction="ifRoom">
-        <menu xmlns:android="http://schemas.android.com/apk/res/android">
-            <item android:id="@+id/viewProfile"
-                android:title="@string/viewProfile"
-                android:showAsAction="ifRoom"/>
-            <item android:id="@+id/aboutUs"
-                android:title="@string/aboutUs"
-                android:showAsAction="ifRoom"/>
-            <item android:id="@+id/contactUs"
-                android:title="@string/contactUs"
-                android:showAsAction="ifRoom"/>
-            <item android:id="@+id/help"
-                android:title="@string/help"
-                android:showAsAction="ifRoom"/>
-            <item android:id="@+id/logout"
-                android:title="@string/logout"
-                android:showAsAction="ifRoom"/>
-        </menu>
-    </item>
+    <item android:id="@+id/viewProfile"
+        android:title="@string/viewProfile"
+        android:showAsAction="collapseActionView"/>
+    <item android:id="@+id/logout"
+        android:title="@string/logout"
+        android:showAsAction="collapseActionView"/>
 
 </menu>

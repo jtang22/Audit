@@ -3,5 +3,6 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="lineColor">#191919</color>
     <color name="goldenStar">#FFFDEC00</color>
 </resources>
