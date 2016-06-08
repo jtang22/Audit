@@ -209,7 +209,11 @@ public class UserProfile extends AppCompatActivity {
                     m_profileName.setText(fullName);
                     m_memberSince.setText(memberSince);
                     m_numReviews.setText(numReviews);
-                    Picasso.with(UserProfile.this).load(user.getParseFile("picture").getUrl()).resize(160, 160).into(m_profilePic);
+                    if (user.getParseFile("picture") == null) {
+                        Picasso.with(UserProfile.this).load(getResources().getString(R.string.placeholder_user_url)).resize(160, 160).into(m_profilePic);
+                    } else {
+                        Picasso.with(UserProfile.this).load(user.getParseFile("picture").getUrl()).resize(160, 160).into(m_profilePic);
+                    }
                 } else {
                     Log.e("User", "Error: " + e.getMessage());
                 }
@@ -231,7 +235,6 @@ public class UserProfile extends AppCompatActivity {
             public void done(List<ParseObject> reviewList, ParseException e) {
                 if (e == null) {
                     for (int i = 0; i < reviewList.size(); i++) {
-                        Log.i("REVIEW", reviewList.get(i).getString("comment"));
                         m_reviewList.add(reviewList.get(i));
                         m_reviewAdapter.notifyDataSetChanged();
                     }
@@ -251,7 +254,11 @@ public class UserProfile extends AppCompatActivity {
                     for (int i = 0; i < m_reviewList.size(); i++) {
                         for (int j = 0; j < companyList.size(); j++) {
                             if (m_reviewList.get(i).getString("companyId").equals(companyList.get(j).getString("Name"))) {
-                                m_companyPicList.add(companyList.get(j).getParseFile("Image").getUrl());
+                                if (companyList.get(j).getParseFile("Image") == null) {
+                                    m_companyPicList.add(getResources().getString(R.string.placeholder_company_url));
+                                } else {
+                                    m_companyPicList.add(companyList.get(j).getParseFile("Image").getUrl());
+                                }
                                 m_reviewAdapter.notifyDataSetChanged();
                                 break;
                             }

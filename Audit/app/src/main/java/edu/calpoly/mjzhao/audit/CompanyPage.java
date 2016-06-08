@@ -170,8 +170,11 @@ public class CompanyPage extends AppCompatActivity{
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> companyList, ParseException e) {
                 if (e == null) {
-                    Log.i("Company", companyList.get(0).getParseFile("Image").getUrl());
-                    Picasso.with(CompanyPage.this).load(companyList.get(0).getParseFile("Image").getUrl()).into(m_companyImageView);
+                    if (companyList.get(0).getParseFile("Image") == null) {
+                        Picasso.with(CompanyPage.this).load(getResources().getString(R.string.placeholder_company_url)).into(m_companyImageView);
+                    } else {
+                        Picasso.with(CompanyPage.this).load(companyList.get(0).getParseFile("Image").getUrl()).into(m_companyImageView);
+                    }
                     m_companyURLView.setText(companyList.get(0).getString("Url"));
                 } else {
                     Log.e("Companies", "Error: " + e.getMessage());
@@ -188,7 +191,6 @@ public class CompanyPage extends AppCompatActivity{
             public void done(List<ParseObject> reviewList, ParseException e) {
                 if (e == null) {
                     for (int i = 0; i < reviewList.size(); i++) {
-                        Log.i("REVIEW", reviewList.get(i).getString("comment"));
                         m_reviewList.add(reviewList.get(i));
                         m_reviewAdapter.notifyDataSetChanged();
 
@@ -218,8 +220,11 @@ public class CompanyPage extends AppCompatActivity{
                 for (int i = 0; i < m_reviewList.size(); i++) {
                     for (int j = 0; j < userList.size(); j++) {
                         if (m_reviewList.get(i).getString("userId").equals(userList.get(j).getUsername())) {
-                            Log.i("USERS", userList.get(i).getParseFile("picture").getUrl());
-                            m_userPicList.add(userList.get(j).getParseFile("picture").getUrl());
+                            if (userList.get(j).getParseFile("picture") == null) {
+                                m_userPicList.add(getResources().getString(R.string.placeholder_user_url));
+                            } else {
+                                m_userPicList.add(userList.get(j).getParseFile("picture").getUrl());
+                            }
                             break;
                         }
                     }

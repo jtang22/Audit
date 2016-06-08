@@ -55,4 +55,6 @@
     <string name="prompt_password_confirm">Confirm Password</string>
     <string name="enter_email">Enter Email</string>
     <string name="send_reset">Send Reset Email</string>
+    <string name="placeholder_user_url">http://i.imgur.com/99Vx5QV.jpg</string>
+    <string name="placeholder_company_url">http://i.imgur.com/872zUGK.png</string>
 </resources>

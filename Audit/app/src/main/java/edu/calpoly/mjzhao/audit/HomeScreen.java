@@ -176,6 +176,7 @@ public class HomeScreen extends AppCompatActivity {
                                             Intent intent = new Intent(HomeScreen.this, AddReview.class);
                                             intent.putExtras(bundle);
                                             startActivity(intent);
+                                            dialog.dismiss();
                                         }
                                     }).create().show();
                         }
